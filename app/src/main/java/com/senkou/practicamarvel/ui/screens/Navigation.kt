@@ -28,10 +28,10 @@ fun Navigation() {
     composable(
       route = "detail/{$PARAMETER_CHARACTER_ID}",
       arguments = listOf(navArgument(PARAMETER_CHARACTER_ID) { type = NavType.IntType })
-    ) {backstackEntry ->
+    ) { backstackEntry ->
       val characterId = requireNotNull(backstackEntry.arguments?.getInt(PARAMETER_CHARACTER_ID))
       DetailScreen(
-        viewModel {DetailViewmodel(characterId)},
+        viewModel { DetailViewmodel(characterId) },
         onBack = { navController.popBackStack() }
       )
     }
