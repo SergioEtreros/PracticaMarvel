@@ -1,4 +1,4 @@
-package com.senkou.practicamarvel.data
+package com.senkou.practicamarvel.data.network
 
 import com.senkou.practicamarvel.BuildConfig
 import kotlinx.serialization.json.Json

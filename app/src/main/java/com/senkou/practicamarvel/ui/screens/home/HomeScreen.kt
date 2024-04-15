@@ -6,15 +6,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.senkou.practicamarvel.domain.data.Character
-import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.runtime.LaunchedEffect
+import com.senkou.practicamarvel.domain.model.Character
 import com.senkou.practicamarvel.ui.screens.Screen
 
 @Composable
@@ -23,10 +22,6 @@ fun HomeScreen(
   model: HomeScreenViewmodel = viewModel(),
 ) {
   Screen {
-
-//    LaunchedEffect(key1 = true) {
-//      model.getCharacters()
-//    }
 
     val state = model.state
 

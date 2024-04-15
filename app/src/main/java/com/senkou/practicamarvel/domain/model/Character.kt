@@ -1,4 +1,4 @@
-package com.senkou.practicamarvel.domain.data
+package com.senkou.practicamarvel.domain.model
 
 data class Character(
   val id: Int,

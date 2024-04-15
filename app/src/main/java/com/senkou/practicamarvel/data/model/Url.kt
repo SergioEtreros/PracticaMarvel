@@ -1,4 +1,4 @@
-package com.senkou.practicamarvel.data
+package com.senkou.practicamarvel.data.model
 
 
 import kotlinx.serialization.SerialName

@@ -5,8 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.senkou.practicamarvel.data.CharactersRepository
-import com.senkou.practicamarvel.domain.data.Character
+import com.senkou.practicamarvel.data.network.CharactersRepository
+import com.senkou.practicamarvel.domain.model.Character
 import kotlinx.coroutines.launch
 
 class DetailViewmodel(private val characterId: Int) : ViewModel() {

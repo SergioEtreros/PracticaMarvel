@@ -1,12 +1,12 @@
-package com.senkou.practicamarvel.data
+package com.senkou.practicamarvel.data.network
 
-import com.senkou.practicamarvel.domain.data.Character
+import com.senkou.practicamarvel.data.model.RemoteCharacter
+import com.senkou.practicamarvel.domain.model.Character
 
 class CharactersRepository {
 
   suspend fun fetchCharacters(): List<Character> =
-    CharactersClient
-      .instance
+    CharactersClient.instance
       .getCharacters()
       .data
       .results
@@ -14,11 +14,8 @@ class CharactersRepository {
         it.toDomainModel()
       }
 
-
-
   suspend fun fetchCharacterById(id: Int): Character =
-    CharactersClient
-      .instance
+    CharactersClient.instance
       .getCharacterById(id)
       .data
       .results
