@@ -10,6 +10,10 @@ class CharactersRepository {
       .getCharacters()
       .data
       .results
+      .filter {
+        !it.thumbnail.path.contains("image_not_available") &&
+            it.thumbnail.extension != "gif"
+      }
       .map {
         it.toDomainModel()
       }
@@ -29,5 +33,6 @@ private fun RemoteCharacter.toDomainModel(): Character =
     id = id,
     name = name,
     description = description,
-    imageUrl = "${thumbnail.path.replace("http:", "https:")}.${thumbnail.extension}"
+    imageUrl = "${thumbnail.path.replace("http:", "https:")}.${thumbnail.extension}",
+    comics = comics.items.map { it.name }
   )

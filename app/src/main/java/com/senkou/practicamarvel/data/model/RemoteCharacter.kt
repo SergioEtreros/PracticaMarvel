@@ -10,5 +10,6 @@ data class RemoteCharacter(
   val modified: String,
   val thumbnail: Thumbnail,
   val resourceURI: String,
+  val comics: Comics,
   val urls: List<Url>
 )
