@@ -1,6 +1,6 @@
-package com.senkou.practicamarvel.data.network
+package com.senkou.practicamarvel.data.network.marvel
 
-import com.senkou.practicamarvel.data.model.RemoteResult
+import com.senkou.practicamarvel.data.model.marvel.RemoteResult
 import retrofit2.http.GET
 import retrofit2.http.Path
 

@@ -1,6 +1,6 @@
-package com.senkou.practicamarvel.data.network
+package com.senkou.practicamarvel.data.network.marvel
 
-import com.senkou.practicamarvel.data.model.RemoteCharacter
+import com.senkou.practicamarvel.data.model.marvel.RemoteCharacter
 import com.senkou.practicamarvel.domain.model.Character
 
 class CharactersRepository {
