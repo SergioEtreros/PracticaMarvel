@@ -1,39 +1,55 @@
 package com.senkou.practicamarvel.ui.screens.splash
 
 import android.content.res.Configuration
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.rememberNavController
 import com.senkou.practicamarvel.R
+import com.senkou.practicamarvel.data.network.marvel.CharactersRepository
+import com.senkou.practicamarvel.ui.screens.Home
 import com.senkou.practicamarvel.ui.screens.Screen
-import kotlinx.coroutines.delay
+import com.senkou.practicamarvel.ui.screens.home.HomeScreenViewmodel
+import com.senkou.practicamarvel.ui.theme.rojoMarvel
+import com.senkou.practicamarvel.usecase.GetCharacterListUseCase
 
 @Composable
-fun SplashScreen(navigateMainScreen: () -> Unit) {
+fun SplashScreen(
+  model: HomeScreenViewmodel,
+  navigateMainScreen: () -> Unit
+) {
 
   LaunchedEffect(true) {
-    delay(1500)
-    navigateMainScreen()
+    model.loadList{
+      navigateMainScreen()
+    }
   }
 
   Screen {
 
     Box(
-      modifier = Modifier.fillMaxSize(),
+      modifier = Modifier
+        .fillMaxSize()
+        .background(rojoMarvel),
       contentAlignment = Alignment.Center
     ) {
-      Text(
-        text = stringResource(R.string.app_name),
-        style = MaterialTheme.typography.headlineLarge,
-        color = MaterialTheme.colorScheme.onSurface
-      )
+      Image(painter = painterResource(id = R.drawable.marvle_m), contentDescription = null, modifier = Modifier.size(200.dp))
+
+//      Text(
+//        text = stringResource(R.string.app_name),
+//        style = MaterialTheme.typography.headlineLarge,
+//        color = MaterialTheme.colorScheme.onSurface
+//      )
     }
   }
 }
@@ -45,5 +61,12 @@ fun SplashScreen(navigateMainScreen: () -> Unit) {
 )
 @Composable
 fun SplashScreenPreview() {
-  SplashScreen(navigateMainScreen = { })
+  val navController = rememberNavController()
+  SplashScreen(
+    viewModel {
+      HomeScreenViewmodel(GetCharacterListUseCase(CharactersRepository()))}
+  ){
+    navController.popBackStack()
+    navController.navigate(Home)
+  }
 }

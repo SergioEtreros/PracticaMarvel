@@ -3,11 +3,13 @@ package com.senkou.practicamarvel.ui.screens.detail
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -42,23 +44,25 @@ fun DetailScreen(vm: DetailViewmodel, onBack: () -> Unit) {
 
   Screen {
 
-    Scaffold(topBar = {
-      TopAppBar(title = {
-        Text(
-          text = state.character?.name ?: "",
-          style = MaterialTheme.typography.headlineMedium,
-          fontWeight = FontWeight.Bold,
-        )
-      }, navigationIcon = {
-        IconButton(onClick = onBack) {
-          Icon(
-            imageVector = Icons.AutoMirrored.Default.ArrowBack,
-            contentDescription = stringResource(id = R.string.back)
+    Scaffold(
+      topBar = {
+        TopAppBar(title = {
+          Text(
+            text = state.character?.name ?: "",
+            style = MaterialTheme.typography.headlineMedium,
+            fontWeight = FontWeight.Bold,
           )
+        }, navigationIcon = {
+          IconButton(onClick = onBack) {
+            Icon(
+              imageVector = Icons.AutoMirrored.Default.ArrowBack,
+              contentDescription = stringResource(id = R.string.back)
+            )
+          }
         }
-      })
-    }
-
+        )
+      },
+      contentWindowInsets = WindowInsets.safeDrawing
     ) { paddingValues ->
       state.character?.let { character ->
 

@@ -19,16 +19,20 @@ import com.senkou.practicamarvel.usecase.GetCharacterListUseCase
 fun Navigation() {
 
   val navController = rememberNavController()
+  val homeScreenViewmodel = viewModel {
+    HomeScreenViewmodel(GetCharacterListUseCase(CharactersRepository()))
+  }
 
   NavHost(navController = navController, startDestination = Splash) {
     composable<Splash> {
-      SplashScreen { navController.navigate(Home) }
+      SplashScreen(homeScreenViewmodel){
+        navController.popBackStack()
+        navController.navigate(Home)
+      }
     }
 
     composable<Home> {
-      HomeScreen(
-        viewModel { HomeScreenViewmodel(GetCharacterListUseCase(CharactersRepository())) }
-      ) { character ->
+      HomeScreen(homeScreenViewmodel) { character ->
         navController.navigate(Detail(character.id))
       }
     }

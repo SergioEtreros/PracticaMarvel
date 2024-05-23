@@ -10,15 +10,18 @@ import com.senkou.practicamarvel.usecase.GetCharacterListUseCase
 import kotlinx.coroutines.launch
 
 class HomeScreenViewmodel(
-  getCharacterListUseCase: GetCharacterListUseCase
+  private val getCharacterListUseCase: GetCharacterListUseCase,
 ) : ViewModel() {
 
   var state by mutableStateOf(UiState(isLoading = true))
     private set
 
-  init {
+  fun loadList(
+    loadingEnd: () -> Unit
+  ) {
     viewModelScope.launch {
       state = UiState(isLoading = false, characters = getCharacterListUseCase.invoke())
+      loadingEnd()
     }
   }
 }

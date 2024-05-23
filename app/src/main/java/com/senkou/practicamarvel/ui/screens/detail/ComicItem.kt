@@ -13,6 +13,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.senkou.practicamarvel.ui.theme.AsymetricSmall
+import com.senkou.practicamarvel.ui.theme.blancoMarvel
+import com.senkou.practicamarvel.ui.theme.rojoMarvel
 
 @Composable
 fun ComicItem(comic: String) {
@@ -20,11 +22,12 @@ fun ComicItem(comic: String) {
   Box(
     modifier = Modifier.fillMaxWidth()
       .clip(AsymetricSmall)
-      .background(MaterialTheme.colorScheme.secondaryContainer)
+      .background(rojoMarvel)
       .padding(8.dp)
   ) {
     Text(
       text = comic,
+      color = blancoMarvel,
       style = MaterialTheme.typography.bodyLarge,
       maxLines = 1,
       overflow = TextOverflow.Ellipsis
