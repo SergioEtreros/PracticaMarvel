@@ -13,7 +13,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.senkou.practicamarvel.ui.theme.AsymetricSmall
-import com.senkou.practicamarvel.ui.theme.Steel
 
 @Composable
 fun ComicItem(comic: String) {
@@ -21,7 +20,7 @@ fun ComicItem(comic: String) {
   Box(
     modifier = Modifier.fillMaxWidth()
       .clip(AsymetricSmall)
-      .background(Steel)
+      .background(MaterialTheme.colorScheme.secondaryContainer)
       .padding(8.dp)
   ) {
     Text(

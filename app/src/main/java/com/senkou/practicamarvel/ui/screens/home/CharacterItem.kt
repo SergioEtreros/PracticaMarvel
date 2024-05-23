@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.senkou.practicamarvel.domain.model.Character
 import com.senkou.practicamarvel.ui.theme.AsymetricLarge
-import com.senkou.practicamarvel.ui.theme.Steel
 
 @Composable
 fun CharacterItem(
@@ -30,7 +29,6 @@ fun CharacterItem(
     elevation = CardDefaults.cardElevation(
       defaultElevation = 16.dp,
     ),
-    colors = CardDefaults.cardColors(containerColor = Steel),
     onClick = onClick
   ) {
 
@@ -45,7 +43,6 @@ fun CharacterItem(
         modifier = Modifier
           .fillMaxWidth()
           .aspectRatio(2 / 3F)
-//          .clip()
       )
 
       Text(

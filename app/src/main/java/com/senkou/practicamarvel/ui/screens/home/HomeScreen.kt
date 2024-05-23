@@ -21,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.senkou.practicamarvel.R
 import com.senkou.practicamarvel.domain.model.Character
 import com.senkou.practicamarvel.ui.screens.Screen
@@ -29,8 +28,8 @@ import com.senkou.practicamarvel.ui.screens.Screen
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
+  model: HomeScreenViewmodel,
   onItemClick: (Character) -> Unit,
-  model: HomeScreenViewmodel = viewModel(),
 ) {
   Screen {
 

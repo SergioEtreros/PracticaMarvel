@@ -5,24 +5,20 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.senkou.practicamarvel.data.network.marvel.CharactersRepository
-import com.senkou.practicamarvel.data.network.pokemon.PokemonRepository
 import com.senkou.practicamarvel.domain.model.Character
+import com.senkou.practicamarvel.usecase.GetCharacterListUseCase
 import kotlinx.coroutines.launch
 
-class HomeScreenViewmodel : ViewModel() {
+class HomeScreenViewmodel(
+  getCharacterListUseCase: GetCharacterListUseCase
+) : ViewModel() {
 
   var state by mutableStateOf(UiState(isLoading = true))
     private set
 
-  private val repository = CharactersRepository()
-  private val repository2 = PokemonRepository()
-
-  //  fun getCharacters() {
   init {
     viewModelScope.launch {
-//      state = UiState(isLoading = false, characters = repository.fetchCharacters())
-      state = UiState(isLoading = false, characters = repository2.fetchPokemons())
+      state = UiState(isLoading = false, characters = getCharacterListUseCase.invoke())
     }
   }
 }
