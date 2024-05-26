@@ -1,6 +1,7 @@
 package com.senkou.practicamarvel.data.network.marvel
 
 import com.senkou.practicamarvel.data.model.marvel.RemoteCharacter
+import com.senkou.practicamarvel.data.model.marvel.Thumbnail
 import com.senkou.practicamarvel.domain.model.Character
 
 class CharactersRepository {
@@ -26,6 +27,12 @@ class CharactersRepository {
       .first()
       .toDomainModel()
 
+  suspend fun getCharacterComics(characterId: Int) =
+    CharactersClient.instance
+      .getComicsByCharacterId(characterId)
+      .data
+      .results
+      .map { it.thumbnail.toUrlString() }
 }
 
 private fun RemoteCharacter.toDomainModel(): Character =
@@ -33,6 +40,8 @@ private fun RemoteCharacter.toDomainModel(): Character =
     id = id,
     name = name,
     description = description,
-    imageUrl = "${thumbnail.path.replace("http:", "https:")}.${thumbnail.extension}",
+    imageUrl = thumbnail.toUrlString(),
     comics = comics.items.map { it.name }
   )
+
+private fun Thumbnail.toUrlString(): String = "${path.replace("http:", "https:")}.${extension}"

@@ -1,36 +1,33 @@
 package com.senkou.practicamarvel.ui.screens.detail
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.senkou.practicamarvel.ui.theme.AsymetricSmall
-import com.senkou.practicamarvel.ui.theme.blancoMarvel
-import com.senkou.practicamarvel.ui.theme.rojoMarvel
+import coil.compose.AsyncImage
 
 @Composable
-fun ComicItem(comic: String) {
+fun ComicItem(image: String) {
 
-  Box(
-    modifier = Modifier.fillMaxWidth()
-      .clip(AsymetricSmall)
-      .background(rojoMarvel)
-      .padding(8.dp)
+  Card(
+    shape = RoundedCornerShape(6.dp),
+    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
   ) {
-    Text(
-      text = comic,
-      color = blancoMarvel,
-      style = MaterialTheme.typography.bodyLarge,
-      maxLines = 1,
-      overflow = TextOverflow.Ellipsis
+    AsyncImage(
+      model = image,
+      contentDescription = image,
+      contentScale = ContentScale.Crop,
+      modifier = Modifier
+        .fillMaxWidth()
+        .clip(RoundedCornerShape(6.dp))
+        .aspectRatio(2 / 3F)
     )
   }
 }
@@ -38,5 +35,5 @@ fun ComicItem(comic: String) {
 @Preview(showBackground = true)
 @Composable
 fun ComicItemPreview() {
-  ComicItem(comic = "comic")
+  ComicItem(image = "comic")
 }

@@ -12,6 +12,7 @@ import com.senkou.practicamarvel.ui.screens.detail.DetailViewmodel
 import com.senkou.practicamarvel.ui.screens.home.HomeScreen
 import com.senkou.practicamarvel.ui.screens.home.HomeScreenViewmodel
 import com.senkou.practicamarvel.ui.screens.splash.SplashScreen
+import com.senkou.practicamarvel.usecase.GetCharacterComicsUseCase
 import com.senkou.practicamarvel.usecase.GetCharacterDetailsUseCase
 import com.senkou.practicamarvel.usecase.GetCharacterListUseCase
 
@@ -43,7 +44,8 @@ fun Navigation() {
         viewModel {
           DetailViewmodel(
             character.characterId,
-            GetCharacterDetailsUseCase(CharactersRepository())
+            GetCharacterDetailsUseCase(CharactersRepository()),
+            GetCharacterComicsUseCase(CharactersRepository())
           )
         },
         onBack = { navController.popBackStack() }

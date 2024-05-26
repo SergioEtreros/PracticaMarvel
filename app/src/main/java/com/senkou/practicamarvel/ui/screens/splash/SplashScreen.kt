@@ -30,7 +30,7 @@ fun SplashScreen(
 ) {
 
   LaunchedEffect(true) {
-    model.loadList{
+    model.loadList {
       navigateMainScreen()
     }
   }
@@ -43,13 +43,11 @@ fun SplashScreen(
         .background(rojoMarvel),
       contentAlignment = Alignment.Center
     ) {
-      Image(painter = painterResource(id = R.drawable.marvle_m), contentDescription = null, modifier = Modifier.size(200.dp))
-
-//      Text(
-//        text = stringResource(R.string.app_name),
-//        style = MaterialTheme.typography.headlineLarge,
-//        color = MaterialTheme.colorScheme.onSurface
-//      )
+      Image(
+        painter = painterResource(id = R.drawable.marvle_m),
+        contentDescription = null,
+        modifier = Modifier.size(200.dp)
+      )
     }
   }
 }
@@ -64,8 +62,9 @@ fun SplashScreenPreview() {
   val navController = rememberNavController()
   SplashScreen(
     viewModel {
-      HomeScreenViewmodel(GetCharacterListUseCase(CharactersRepository()))}
-  ){
+      HomeScreenViewmodel(GetCharacterListUseCase(CharactersRepository()))
+    }
+  ) {
     navController.popBackStack()
     navController.navigate(Home)
   }

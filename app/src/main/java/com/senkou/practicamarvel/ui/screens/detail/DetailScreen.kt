@@ -1,6 +1,6 @@
 package com.senkou.practicamarvel.ui.screens.detail
 
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -10,29 +10,24 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.senkou.practicamarvel.R
 import com.senkou.practicamarvel.ui.screens.Screen
 import com.senkou.practicamarvel.ui.theme.AsymetricLarge
 
@@ -40,36 +35,47 @@ import com.senkou.practicamarvel.ui.theme.AsymetricLarge
 @Composable
 fun DetailScreen(vm: DetailViewmodel, onBack: () -> Unit) {
 
-  val state = vm.state
-
   Screen {
+
+    val state by vm.state.collectAsState()
+    val detailScreenState = rememberDetailScreenState()
+
+    detailScreenState.ShowMessageEffect(message = state.message) {
+      vm.onMessageShown()
+    }
 
     Scaffold(
       topBar = {
-        TopAppBar(title = {
-          Text(
-            text = state.character?.name ?: "",
-            style = MaterialTheme.typography.headlineMedium,
-            fontWeight = FontWeight.Bold,
-          )
-        }, navigationIcon = {
-          IconButton(onClick = onBack) {
-            Icon(
-              imageVector = Icons.AutoMirrored.Default.ArrowBack,
-              contentDescription = stringResource(id = R.string.back)
-            )
-          }
-        }
+        DetailTopBar(
+          charName = state.character?.name.orEmpty(),
+          favorite = state.favorite,
+          scrollBehavior = detailScreenState.scrollBehavior,
+          onBack = onBack,
+          onFavorite = { vm.onFavoriteClick() }
         )
       },
+      snackbarHost = { SnackbarHost(hostState = detailScreenState.snackbarHostState) },
+      modifier = Modifier.nestedScroll(detailScreenState.scrollBehavior.nestedScrollConnection),
       contentWindowInsets = WindowInsets.safeDrawing
     ) { paddingValues ->
+
+      if (state.isLoading) {
+        Box(
+          modifier = Modifier
+            .fillMaxSize()
+            .padding(paddingValues),
+          contentAlignment = Alignment.Center
+        ) {
+          CircularProgressIndicator()
+        }
+      }
+
       state.character?.let { character ->
 
         Column(
           modifier = Modifier
             .fillMaxSize()
-            .padding(paddingValues)
+            .padding(top = paddingValues.calculateTopPadding())
             .padding(horizontal = 16.dp),
           horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -77,16 +83,22 @@ fun DetailScreen(vm: DetailViewmodel, onBack: () -> Unit) {
 
           Spacer(modifier = Modifier.height(16.dp))
 
-          AsyncImage(
-            model = character.imageUrl,
-            contentDescription = character.name,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-              .fillMaxWidth()
-              .aspectRatio(16f / 9f)
-              .clip(AsymetricLarge)
-              .shadow(8.dp)
-          )
+          Card(
+            modifier = Modifier.fillMaxWidth(),
+            shape = AsymetricLarge,
+            elevation = CardDefaults.cardElevation(
+              defaultElevation = 8.dp,
+            )
+          ) {
+
+            AsyncImage(
+              model = character.imageUrl,
+              contentDescription = character.name,
+              contentScale = ContentScale.Crop,
+              modifier = Modifier
+                .aspectRatio(16f / 9f)
+            )
+          }
 
           Spacer(modifier = Modifier.height(24.dp))
 
@@ -99,23 +111,12 @@ fun DetailScreen(vm: DetailViewmodel, onBack: () -> Unit) {
             Spacer(modifier = Modifier.height(24.dp))
           }
 
-          Text(
-            text = stringResource(R.string.comics),
-            style = MaterialTheme.typography.headlineMedium
-          )
-
-          Spacer(modifier = Modifier.height(16.dp))
-
-          LazyColumn(
-            modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-          ) {
-            items(character.comics) { comic ->
-              ComicItem(comic = comic)
-            }
-          }
+          ComicGrid(state.comics)
         }
       }
     }
   }
 }
+
+
+

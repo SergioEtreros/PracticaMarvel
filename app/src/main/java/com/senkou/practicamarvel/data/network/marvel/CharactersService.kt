@@ -1,5 +1,6 @@
 package com.senkou.practicamarvel.data.network.marvel
 
+import com.senkou.practicamarvel.data.model.marvel.RemoteComicResult
 import com.senkou.practicamarvel.data.model.marvel.RemoteResult
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -12,4 +13,7 @@ interface CharactersService {
 
   @GET("v1/public/characters/{id}")
   suspend fun getCharacterById(@Path("id") id: Int): RemoteResult
+
+  @GET("https://gateway.marvel.com:443/v1/public/characters/{id}/comics?limit=30")
+  suspend fun getComicsByCharacterId(@Path("id") id: Int): RemoteComicResult
 }
