@@ -4,6 +4,8 @@ plugins {
   alias(libs.plugins.androidApplication)
   alias(libs.plugins.jetbrainsKotlinAndroid)
   alias(libs.plugins.kotlinxSerialization)
+  alias(libs.plugins.google.devtools.ksp)
+  alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -30,6 +32,10 @@ android {
 
     val marvelPrivApiKey = properties.getProperty("MARVEL_PRIV_API_KEY", "")
     buildConfigField("String", "MARVEL_PRIV_API_KEY", "\"$marvelPrivApiKey\"")
+
+    ksp {
+      arg("room.schemaLocation", "$projectDir/schemas")
+    }
   }
 
   buildTypes {
@@ -48,9 +54,6 @@ android {
   buildFeatures {
     compose = true
     buildConfig = true
-  }
-  composeOptions {
-    kotlinCompilerExtensionVersion = "1.5.11"
   }
   packaging {
     resources {
@@ -74,6 +77,10 @@ dependencies {
   implementation(libs.retrofit)
   implementation(libs.retrofit.converter.kotlinx.serialization)
   implementation(libs.kotlinx.serialization.json)
+  implementation(libs.room.runtime)
+  implementation(libs.room.ktx)
+
+  ksp(libs.room.compiler)
 
   testImplementation(libs.junit)
   androidTestImplementation(libs.androidx.junit)

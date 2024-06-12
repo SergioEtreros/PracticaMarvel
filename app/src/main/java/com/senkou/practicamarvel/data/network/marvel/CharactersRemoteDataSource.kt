@@ -12,7 +12,7 @@ import retrofit2.create
 import java.math.BigInteger
 import java.security.MessageDigest
 
-object CharactersClient {
+object CharactersRemoteDataSource {
 
   private val okHttpClient = OkHttpClient.Builder()
     .addInterceptor(::apiKeyAsQuery)

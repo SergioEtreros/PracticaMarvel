@@ -1,10 +1,10 @@
-package com.senkou.practicamarvel.data.model.pokemon
+package com.senkou.practicamarvel.data.network.pokemon.model
 
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Species(
+data class Pokemon(
     val name: String,
     val url: String
 )

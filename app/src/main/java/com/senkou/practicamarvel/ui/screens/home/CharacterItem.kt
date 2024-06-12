@@ -1,6 +1,7 @@
 package com.senkou.practicamarvel.ui.screens.home
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -16,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.senkou.practicamarvel.domain.model.Character
+import com.senkou.practicamarvel.ui.screens.common.FavoriteIcon
 import com.senkou.practicamarvel.ui.theme.AsymetricLarge
 
 @Composable
@@ -45,13 +47,25 @@ fun CharacterItem(
           .aspectRatio(2 / 3F)
       )
 
-      Text(
-        text = character.name,
-        style = MaterialTheme.typography.bodyLarge,
-        fontWeight = FontWeight.Bold,
-        maxLines = 1,
-        modifier = Modifier.padding(8.dp)
-      )
+      Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+          .fillMaxWidth()
+          .padding(8.dp)
+      ) {
+
+        Text(
+          text = character.name,
+          style = MaterialTheme.typography.bodyLarge,
+          fontWeight = FontWeight.Bold,
+          maxLines = 1,
+          modifier = Modifier.weight(1f)
+        )
+
+        FavoriteIcon(
+          favorite = character.favorite
+        )
+      }
     }
   }
 }

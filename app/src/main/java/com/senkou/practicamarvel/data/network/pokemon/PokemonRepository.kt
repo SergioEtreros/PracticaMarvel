@@ -1,7 +1,7 @@
 package com.senkou.practicamarvel.data.network.pokemon
 
-import com.senkou.practicamarvel.data.model.pokemon.Pokemon
-import com.senkou.practicamarvel.data.model.pokemon.PokemonDetail
+import com.senkou.practicamarvel.data.network.pokemon.model.Pokemon
+import com.senkou.practicamarvel.data.network.pokemon.model.PokemonDetail
 import com.senkou.practicamarvel.domain.model.Character
 
 class PokemonRepository {
@@ -26,7 +26,7 @@ private fun Pokemon.toDomainModel(): Character {
     name = name,
     description = "",
     imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$id.png",
-    comics = emptyList()
+    favorite = false
   )
 }
 private fun PokemonDetail.toDomainModel(): Character =
@@ -35,5 +35,5 @@ private fun PokemonDetail.toDomainModel(): Character =
     name = name,
     description = "",
     imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$id.png",
-    comics = abilities.map { it.ability.name }
+    favorite = false
   )

@@ -2,12 +2,9 @@ package com.senkou.practicamarvel.ui.screens.detail
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Text
@@ -16,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import com.senkou.practicamarvel.R
-import com.senkou.practicamarvel.ui.theme.rojoMarvel
+import com.senkou.practicamarvel.ui.screens.common.FavoriteIcon
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
@@ -45,13 +42,10 @@ fun DetailTopBar(
     },
     actions = {
       IconButton(onClick = onFavorite) {
-        Icon(
-          tint = if (favorite) rojoMarvel else LocalContentColor.current,
-          imageVector = if (favorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
-          contentDescription = "Favorite"
-        )
+        FavoriteIcon(favorite)
       }
     },
     scrollBehavior = scrollBehavior
   )
 }
+

@@ -1,4 +1,4 @@
-package com.senkou.practicamarvel.data.model.pokemon
+package com.senkou.practicamarvel.data.network.pokemon.model
 
 
 import kotlinx.serialization.SerialName

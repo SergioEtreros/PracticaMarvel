@@ -1,9 +1,9 @@
 package com.senkou.practicamarvel.usecase
 
-import com.senkou.practicamarvel.data.network.marvel.CharactersRepository
+import com.senkou.practicamarvel.data.CharactersRepository
 
 class GetCharacterDetailsUseCase(
   private val repository: CharactersRepository
 ) {
-  suspend operator fun invoke(charaterId: Int) = repository.fetchCharacterById(charaterId)
+  operator fun invoke(charaterId: Int) = repository.fetchCharacterById(charaterId)
 }

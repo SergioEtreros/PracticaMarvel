@@ -1,7 +1,7 @@
 package com.senkou.practicamarvel.data.network.pokemon
 
-import com.senkou.practicamarvel.data.model.pokemon.PokemonDetail
-import com.senkou.practicamarvel.data.model.pokemon.RemotePokemon
+import com.senkou.practicamarvel.data.network.pokemon.model.PokemonDetail
+import com.senkou.practicamarvel.data.network.pokemon.model.RemotePokemon
 import retrofit2.http.GET
 import retrofit2.http.Path
 
