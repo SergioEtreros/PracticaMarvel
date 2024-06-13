@@ -1,4 +1,4 @@
-package com.senkou.practicamarvel.data.model.marvel
+package com.senkou.practicamarvel.data.network.marvel.model
 
 import kotlinx.serialization.Serializable
 

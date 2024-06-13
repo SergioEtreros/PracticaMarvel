@@ -1,7 +1,7 @@
 package com.senkou.practicamarvel.data.network.marvel
 
-import com.senkou.practicamarvel.data.model.marvel.RemoteComicResult
-import com.senkou.practicamarvel.data.model.marvel.RemoteResult
+import com.senkou.practicamarvel.data.network.marvel.model.RemoteComicResult
+import com.senkou.practicamarvel.data.network.marvel.model.RemoteResult
 import retrofit2.http.GET
 import retrofit2.http.Path
 
