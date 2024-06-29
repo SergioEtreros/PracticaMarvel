@@ -3,8 +3,8 @@ package com.senkou.practicamarvel.ui.screens.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.senkou.practicamarvel.domain.model.Character
-import com.senkou.practicamarvel.ifSuccess
-import com.senkou.practicamarvel.stateAsResultIn
+import com.senkou.practicamarvel.ui.ifSuccess
+import com.senkou.practicamarvel.ui.stateAsResultIn
 import com.senkou.practicamarvel.usecase.FavoriteToggleUseCase
 import com.senkou.practicamarvel.usecase.GetCharacterComicsUseCase
 import com.senkou.practicamarvel.usecase.GetCharacterDetailsUseCase

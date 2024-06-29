@@ -2,7 +2,7 @@ package com.senkou.practicamarvel
 
 import android.app.Application
 import androidx.room.Room
-import com.senkou.practicamarvel.data.local.room.model.database.MarvelDB
+import com.senkou.practicamarvel.framework.database.room.model.database.MarvelDB
 
 class PracticaMarvelApp : Application() {
 

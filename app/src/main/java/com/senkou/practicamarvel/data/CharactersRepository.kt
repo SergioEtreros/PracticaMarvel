@@ -1,79 +1,52 @@
 package com.senkou.practicamarvel.data
 
-import com.senkou.practicamarvel.data.local.room.CharactersLocalDataSource
-import com.senkou.practicamarvel.data.local.room.model.entities.Comics
-import com.senkou.practicamarvel.data.network.marvel.CharactersRemoteDataSource
-import com.senkou.practicamarvel.data.network.marvel.model.RemoteCharacter
-import com.senkou.practicamarvel.data.network.marvel.model.RemoteComic
-import com.senkou.practicamarvel.data.network.marvel.model.Thumbnail
+import com.senkou.practicamarvel.data.datasource.CharactersLocalDataSource
+import com.senkou.practicamarvel.data.datasource.CharactersRemoteDataSource
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
-import com.senkou.practicamarvel.data.local.room.model.entities.Character as RoomCharacter
 import com.senkou.practicamarvel.domain.model.Character as DomainCharacter
+import com.senkou.practicamarvel.framework.database.room.model.entities.Character as RoomCharacter
 
 class CharactersRepository(
-  private val charactersRemoteDatasource: CharactersRemoteDataSource,
-  private val charactersLocalDatasource: CharactersLocalDataSource
+  private val charactersLocalDatasource: CharactersLocalDataSource,
+  private val charactersRemoteDatasource: CharactersRemoteDataSource
 ) {
 
   val characters = charactersLocalDatasource.characters.onEach { localCharacters ->
 
     if (localCharacters.isEmpty()) {
-      val remoteCharacters =
-        charactersRemoteDatasource.instance
-          .getCharacters()
-          .data
-          .results
-          .filter {
-            !it.thumbnail.path.contains("image_not_available") &&
-                it.thumbnail.extension != "gif"
-          }
-
-      charactersLocalDatasource.saveAllCharacters(remoteCharacters.map { it.toRoomModel() })
+      val remoteCharacters = charactersRemoteDatasource.getCharacters()
+      charactersLocalDatasource.saveAllCharacters(remoteCharacters)
     }
   }.map { localCharacters -> localCharacters.map { it.toDomainCharacter() } }
 
   fun fetchCharacterById(id: Int) =
     charactersLocalDatasource.getCharacter(id).onEach { localCharacter ->
       if (localCharacter == null) {
-        val remoteCharacter = charactersRemoteDatasource.instance
+        val remoteCharacter = charactersRemoteDatasource
           .getCharacterById(id)
-          .data
-          .results
-          .first()
 
-        charactersLocalDatasource.saveCharacter(remoteCharacter.toRoomModel())
+        charactersLocalDatasource.saveCharacter(remoteCharacter)
       }
     }.map { checkNotNull(it).toDomainCharacter() }.filterNotNull()
 
   fun getComicsByCharacterId(characterId: Int) =
     charactersLocalDatasource.getComicsByCharacterId(characterId).onEach { localComics ->
       if (localComics.isEmpty()) {
-        val remoteComics = charactersRemoteDatasource.instance
+        val remoteComics = charactersRemoteDatasource
           .getComicsByCharacterId(characterId)
-          .data
-          .results
 
-        charactersLocalDatasource.saveComics(remoteComics.map { it.toRoomModel(characterId) })
+        charactersLocalDatasource.saveComics(remoteComics)
       }
     }.map { comics -> comics.map { it.imgUrl } }
 
   suspend fun favoriteToggle(character: DomainCharacter) {
     charactersLocalDatasource.saveCharacter(
-      character.toRoomModel().copy(favorite = !character.favorite)
+      character.copy(favorite = !character.favorite)
     )
   }
 }
-
-private fun DomainCharacter.toRoomModel(): RoomCharacter =
-  RoomCharacter(
-    id = id,
-    name = name,
-    description = description,
-    imageUrl = imageUrl,
-    favorite = favorite
-  )
 
 private fun RoomCharacter.toDomainCharacter(): DomainCharacter =
   DomainCharacter(
@@ -83,21 +56,3 @@ private fun RoomCharacter.toDomainCharacter(): DomainCharacter =
     imageUrl = imageUrl,
     favorite = favorite
   )
-
-private fun RemoteCharacter.toRoomModel(): RoomCharacter =
-  RoomCharacter(
-    id = id,
-    name = name,
-    description = description,
-    imageUrl = thumbnail.toUrlString(),
-    favorite = false
-  )
-
-private fun RemoteComic.toRoomModel(characterId: Int): Comics =
-  Comics(
-    id = id,
-    characterId = characterId,
-    imgUrl = thumbnail.toUrlString()
-  )
-
-private fun Thumbnail.toUrlString(): String = "${path.replace("http:", "https:")}.${extension}"

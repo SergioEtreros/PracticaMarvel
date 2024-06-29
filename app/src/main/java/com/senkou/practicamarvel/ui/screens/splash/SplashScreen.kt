@@ -19,10 +19,11 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.senkou.practicamarvel.PracticaMarvelApp
 import com.senkou.practicamarvel.R
-import com.senkou.practicamarvel.Result
 import com.senkou.practicamarvel.data.CharactersRepository
-import com.senkou.practicamarvel.data.local.room.CharactersLocalDataSource
-import com.senkou.practicamarvel.data.network.marvel.CharactersRemoteDataSource
+import com.senkou.practicamarvel.framework.CharacterServerDataSource
+import com.senkou.practicamarvel.framework.CharactersRoomDataSource
+import com.senkou.practicamarvel.framework.remote.marvel.CharactersClient
+import com.senkou.practicamarvel.ui.Result
 import com.senkou.practicamarvel.ui.screens.Screen
 import com.senkou.practicamarvel.ui.screens.home.HomeScreenViewmodel
 import com.senkou.practicamarvel.ui.theme.rojoMarvel
@@ -68,11 +69,11 @@ fun SplashScreenPreview() {
 
   val marvelDB = (LocalContext.current.applicationContext as PracticaMarvelApp).marvelDB
   val charactersRepository = CharactersRepository(
-    charactersLocalDatasource = CharactersLocalDataSource(
+    charactersLocalDatasource = CharactersRoomDataSource(
       marvelDB.characterDao(),
       marvelDB.comicsDao()
     ),
-    charactersRemoteDatasource = CharactersRemoteDataSource
+    charactersRemoteDatasource = CharacterServerDataSource(CharactersClient.instance)
   )
 
   SplashScreen(

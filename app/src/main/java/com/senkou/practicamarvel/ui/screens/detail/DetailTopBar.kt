@@ -13,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import com.senkou.practicamarvel.R
-import com.senkou.practicamarvel.ui.screens.common.FavoriteIcon
+import com.senkou.practicamarvel.ui.common.FavoriteIcon
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)

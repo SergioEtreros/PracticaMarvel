@@ -17,7 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.senkou.practicamarvel.domain.model.Character
-import com.senkou.practicamarvel.ui.screens.common.FavoriteIcon
+import com.senkou.practicamarvel.ui.common.FavoriteIcon
 import com.senkou.practicamarvel.ui.theme.AsymetricLarge
 
 @Composable

@@ -24,11 +24,12 @@ import androidx.compose.ui.unit.dp
 import com.senkou.practicamarvel.PracticaMarvelApp
 import com.senkou.practicamarvel.R
 import com.senkou.practicamarvel.data.CharactersRepository
-import com.senkou.practicamarvel.data.local.room.CharactersLocalDataSource
-import com.senkou.practicamarvel.data.network.marvel.CharactersRemoteDataSource
 import com.senkou.practicamarvel.domain.model.Character
+import com.senkou.practicamarvel.framework.CharacterServerDataSource
+import com.senkou.practicamarvel.framework.CharactersRoomDataSource
+import com.senkou.practicamarvel.framework.remote.marvel.CharactersClient
+import com.senkou.practicamarvel.ui.common.MarvelScaffold
 import com.senkou.practicamarvel.ui.screens.Screen
-import com.senkou.practicamarvel.ui.screens.common.MarvelScaffold
 import com.senkou.practicamarvel.usecase.GetCharacterListUseCase
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -85,11 +86,11 @@ fun HomeScreenPreview() {
 
   val marvelDB = (LocalContext.current.applicationContext as PracticaMarvelApp).marvelDB
   val charactersRepository = CharactersRepository(
-    charactersLocalDatasource = CharactersLocalDataSource(
+    charactersLocalDatasource = CharactersRoomDataSource(
       marvelDB.characterDao(),
       marvelDB.comicsDao()
     ),
-    charactersRemoteDatasource = CharactersRemoteDataSource
+    charactersRemoteDatasource = CharacterServerDataSource(CharactersClient.instance)
   )
 
   Screen {

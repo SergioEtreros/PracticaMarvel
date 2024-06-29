@@ -25,9 +25,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.senkou.practicamarvel.ifSuccess
+import com.senkou.practicamarvel.ui.common.MarvelScaffold
+import com.senkou.practicamarvel.ui.ifSuccess
 import com.senkou.practicamarvel.ui.screens.Screen
-import com.senkou.practicamarvel.ui.screens.common.MarvelScaffold
 import com.senkou.practicamarvel.ui.theme.AsymetricLarge
 
 @OptIn(ExperimentalMaterial3Api::class)
