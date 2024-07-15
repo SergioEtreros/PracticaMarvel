@@ -8,19 +8,19 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.senkou.practicamarvel.PracticaMarvelApp
-import com.senkou.practicamarvel.data.CharactersRepository
-import com.senkou.practicamarvel.framework.CharacterServerDataSource
-import com.senkou.practicamarvel.framework.CharactersRoomDataSource
-import com.senkou.practicamarvel.framework.remote.marvel.CharactersClient
-import com.senkou.practicamarvel.ui.screens.detail.DetailScreen
-import com.senkou.practicamarvel.ui.screens.detail.DetailViewmodel
-import com.senkou.practicamarvel.ui.screens.home.HomeScreen
-import com.senkou.practicamarvel.ui.screens.home.HomeScreenViewmodel
-import com.senkou.practicamarvel.ui.screens.splash.SplashScreen
-import com.senkou.practicamarvel.usecase.FavoriteToggleUseCase
-import com.senkou.practicamarvel.usecase.GetCharacterComicsUseCase
-import com.senkou.practicamarvel.usecase.GetCharacterDetailsUseCase
-import com.senkou.practicamarvel.usecase.GetCharacterListUseCase
+import com.senkou.practicamarvel.domain.character.data.CharactersRepository
+import com.senkou.practicamarvel.domain.character.usecases.FavoriteToggleUseCase
+import com.senkou.practicamarvel.domain.character.usecases.GetCharacterComicsUseCase
+import com.senkou.practicamarvel.domain.character.usecases.GetCharacterDetailsUseCase
+import com.senkou.practicamarvel.domain.character.usecases.GetCharacterListUseCase
+import com.senkou.practicamarvel.framework.core.CharactersClient
+import com.senkou.practicamarvel.framework.database.CharactersRoomDataSource
+import com.senkou.practicamarvel.framework.network.CharacterServerDataSource
+import com.senkou.practicamarvel.ui.detail.DetailScreen
+import com.senkou.practicamarvel.ui.detail.DetailViewmodel
+import com.senkou.practicamarvel.ui.home.HomeScreen
+import com.senkou.practicamarvel.ui.home.HomeScreenViewmodel
+import com.senkou.practicamarvel.ui.splash.SplashScreen
 
 @Composable
 fun Navigation() {

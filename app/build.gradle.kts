@@ -1,21 +1,15 @@
-import java.util.Properties
-
 plugins {
-  alias(libs.plugins.androidApplication)
-  alias(libs.plugins.jetbrainsKotlinAndroid)
   alias(libs.plugins.kotlinxSerialization)
   alias(libs.plugins.google.devtools.ksp)
-  alias(libs.plugins.compose.compiler)
+  id("practicamarvel.android.application")
+  id("practicamarvel.android.application.compose")
 }
 
 android {
   namespace = "com.senkou.practicamarvel"
-  compileSdk = 34
 
   defaultConfig {
     applicationId = "com.senkou.practicamarvel"
-    minSdk = 24
-    targetSdk = 34
     versionCode = 1
     versionName = "1.0"
 
@@ -23,15 +17,6 @@ android {
     vectorDrawables {
       useSupportLibrary = true
     }
-
-    val properties = Properties()
-    properties.load(project.rootProject.file("local.properties").readText().byteInputStream())
-
-    val marvelApiKey = properties.getProperty("MARVEL_API_KEY", "")
-    buildConfigField("String", "MARVEL_API_KEY", "\"$marvelApiKey\"")
-
-    val marvelPrivApiKey = properties.getProperty("MARVEL_PRIV_API_KEY", "")
-    buildConfigField("String", "MARVEL_PRIV_API_KEY", "\"$marvelPrivApiKey\"")
 
     ksp {
       arg("room.schemaLocation", "$projectDir/schemas")
@@ -44,17 +29,7 @@ android {
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
     }
   }
-  compileOptions {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-  }
-  kotlinOptions {
-    jvmTarget = "1.8"
-  }
-  buildFeatures {
-    compose = true
-    buildConfig = true
-  }
+
   packaging {
     resources {
       excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -64,29 +39,21 @@ android {
 
 dependencies {
 
-  implementation(libs.androidx.core.ktx)
-  implementation(libs.androidx.lifecycle.runtime.ktx)
+  implementation(project(":domain:character"))
+  implementation(project(":framework:characters"))
+  implementation(project(":framework:core"))
+  implementation(project(":feature:characters"))
+  implementation(project(":feature:splashscreen"))
+  implementation(project(":feature:common"))
+
   implementation(libs.androidx.activity.compose)
-  implementation(platform(libs.androidx.compose.bom))
-  implementation(libs.androidx.ui)
-  implementation(libs.androidx.ui.graphics)
-  implementation(libs.androidx.ui.tooling.preview)
-  implementation(libs.androidx.material3)
-  implementation(libs.coil.compose)
-  implementation(libs.navigation.compose)
-  implementation(libs.retrofit)
-  implementation(libs.retrofit.converter.kotlinx.serialization)
-  implementation(libs.kotlinx.serialization.json)
   implementation(libs.room.runtime)
   implementation(libs.room.ktx)
-
-  ksp(libs.room.compiler)
 
   testImplementation(libs.junit)
   androidTestImplementation(libs.androidx.junit)
   androidTestImplementation(libs.androidx.espresso.core)
   androidTestImplementation(platform(libs.androidx.compose.bom))
   androidTestImplementation(libs.androidx.ui.test.junit4)
-  debugImplementation(libs.androidx.ui.tooling)
   debugImplementation(libs.androidx.ui.test.manifest)
 }
