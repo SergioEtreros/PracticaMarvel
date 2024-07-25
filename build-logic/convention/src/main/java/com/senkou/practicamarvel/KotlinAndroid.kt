@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.senkou.practicamarvel
 
 import com.android.build.api.dsl.CommonExtension

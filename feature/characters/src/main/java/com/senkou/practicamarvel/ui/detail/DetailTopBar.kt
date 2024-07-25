@@ -12,7 +12,7 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import com.senkou.practicamarvel.R
+import com.senkou.practicamarvel.ui.characters.R
 import com.senkou.practicamarvel.ui.common.FavoriteIcon
 
 @Composable

@@ -1,30 +1,34 @@
 import java.util.Properties
 
 plugins {
-  id("practicamarvel.android.library")
-  id("practicamarvel.android.room")
-  id("practicamarvel.jvm.retrofit")
+   id("practicamarvel.android.library")
+   id("practicamarvel.android.room")
+   id("practicamarvel.jvm.retrofit")
 }
 
 android {
-  namespace = "com.senkou.practicamarvel.framework.core"
+   namespace = "com.senkou.practicamarvel.framework.core"
 
-  defaultConfig {
-    val properties = Properties()
-    properties.load(project.rootProject.file("local.properties").readText().byteInputStream())
+   defaultConfig {
+      val properties = Properties()
+      properties.load(project.rootProject.file("local.properties").readText().byteInputStream())
 
-    val marvelApiKey = properties.getProperty("MARVEL_API_KEY", "")
-    buildConfigField("String", "MARVEL_API_KEY", "\"$marvelApiKey\"")
+      val marvelApiKey = properties.getProperty("MARVEL_API_KEY", "")
+      buildConfigField("String", "MARVEL_API_KEY", "\"$marvelApiKey\"")
 
-    val marvelPrivApiKey = properties.getProperty("MARVEL_PRIV_API_KEY", "")
-    buildConfigField("String", "MARVEL_PRIV_API_KEY", "\"$marvelPrivApiKey\"")
-  }
+      val marvelPrivApiKey = properties.getProperty("MARVEL_PRIV_API_KEY", "")
+      buildConfigField("String", "MARVEL_PRIV_API_KEY", "\"$marvelPrivApiKey\"")
 
-  buildFeatures {
-    buildConfig = true
-  }
+      ksp {
+         arg("room.schemaLocation", "$projectDir/schemas")
+      }
+   }
+
+   buildFeatures {
+      buildConfig = true
+   }
 }
 
 dependencies {
-  implementation(project(":framework:characters"))
+   implementation(project(":framework:characters"))
 }

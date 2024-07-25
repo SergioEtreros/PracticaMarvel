@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-  namespace = "com.senkou.practicamarvel"
+  namespace = "com.senkou.practicamarvel.ui.characters"
 }
 
 dependencies {

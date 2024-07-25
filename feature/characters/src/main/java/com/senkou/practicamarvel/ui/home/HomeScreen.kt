@@ -18,8 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.senkou.practicamarvel.R
 import com.senkou.practicamarvel.domain.character.entities.Character
+import com.senkou.practicamarvel.ui.characters.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
