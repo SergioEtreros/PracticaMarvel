@@ -2,11 +2,15 @@ package com.senkou.practicamarvel.framework.core
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.senkou.practicamarvel.framework.database.dao.CharacterDao
+import com.senkou.practicamarvel.framework.database.dao.ComicsDao
+import com.senkou.practicamarvel.framework.database.entities.Character
+import com.senkou.practicamarvel.framework.database.entities.Comics
 
 @Database(
   entities = [
-    com.senkou.practicamarvel.framework.database.entities.Character::class,
-    com.senkou.practicamarvel.framework.database.entities.Comics::class,
+    Character::class,
+    Comics::class,
   ],
   version = 1,
   exportSchema = true,
@@ -14,6 +18,6 @@ import androidx.room.RoomDatabase
 )
 abstract class MarvelDB : RoomDatabase() {
 
-  abstract fun characterDao(): com.senkou.practicamarvel.framework.database.dao.CharacterDao
-  abstract fun comicsDao(): com.senkou.practicamarvel.framework.database.dao.ComicsDao
+  abstract fun characterDao(): CharacterDao
+  abstract fun comicsDao(): ComicsDao
 }
