@@ -6,9 +6,10 @@ import com.senkou.practicamarvel.framework.database.dao.ComicsDao
 import com.senkou.practicamarvel.framework.database.entities.Character
 import com.senkou.practicamarvel.framework.database.entities.Comics
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 import com.senkou.practicamarvel.domain.character.entities.Character as DomainCharacter
 
-class CharactersRoomDataSource(
+internal class CharactersRoomDataSource @Inject constructor(
   private val characterDao: CharacterDao,
   private val comicsDao: ComicsDao
 ) : com.senkou.practicamarvel.domain.character.data.CharactersLocalDataSource {

@@ -1,5 +1,6 @@
 plugins {
   id("practicamarvel.android.feature")
+  id("practicamarvel.di.library.compose")
 }
 
 android {

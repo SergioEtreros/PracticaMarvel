@@ -1,5 +1,6 @@
 package com.senkou.practicamarvel.ui.home
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
@@ -17,22 +18,26 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.senkou.practicamarvel.R
 import com.senkou.practicamarvel.domain.character.entities.Character
+import com.senkou.practicamarvel.ui.common.MarvelScaffold
+import com.senkou.practicamarvel.ui.common.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-  model: HomeScreenViewmodel,
+  model: HomeScreenViewmodel = hiltViewModel(),
   onItemClick: (Character) -> Unit,
 ) {
-  com.senkou.practicamarvel.ui.common.Screen {
+  Screen {
 
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     val state by model.state.collectAsState()
 
-    com.senkou.practicamarvel.ui.common.MarvelScaffold(
+    MarvelScaffold(
       state = state,
       topBar = {
         TopAppBar(
@@ -65,31 +70,15 @@ fun HomeScreen(
   }
 }
 
-//@Preview(
-//  showBackground = true,
-//  showSystemUi = true,
-//  uiMode = Configuration.UI_MODE_NIGHT_YES
-//)
-//@Composable
-//fun HomeScreenPreview() {
-//
-//  val marvelDB = (LocalContext.current.applicationContext as PracticaMarvelApp).marvelDB
-//  val charactersRepository = com.senkou.practicamarvel.domain.character.data.CharactersRepository(
-//    charactersLocalDatasource = CharactersRoomDataSource(
-//      marvelDB.characterDao(),
-//      marvelDB.comicsDao()
-//    ),
-//    charactersRemoteDatasource = CharacterServerDataSource(CharactersClient.instance)
-//  )
-//
-//  com.senkou.practicamarvel.ui.common.Screen {
-//    HomeScreen(
-//      model = HomeScreenViewmodel(
-//        com.senkou.practicamarvel.domain.character.usecases.GetCharacterListUseCase(
-//          charactersRepository
-//        )
-//      ),
-//      onItemClick = {}
-//    )
-//  }
-//}
+@Preview(
+  showBackground = true,
+  showSystemUi = true,
+  uiMode = Configuration.UI_MODE_NIGHT_YES
+)
+@Composable
+fun HomeScreenPreview() {
+
+  Screen {
+    HomeScreen {}
+  }
+}

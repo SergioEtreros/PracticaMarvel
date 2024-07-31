@@ -24,19 +24,26 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
+import com.senkou.practicamarvel.ui.common.MarvelScaffold
+import com.senkou.practicamarvel.ui.common.Screen
 import com.senkou.practicamarvel.ui.common.ifSuccess
+import com.senkou.practicamarvel.ui.common.theme.AsymetricLarge
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailScreen(vm: DetailViewmodel, onBack: () -> Unit) {
+fun DetailScreen(
+  vm: DetailViewmodel = hiltViewModel(),
+  onBack: () -> Unit
+) {
 
-  com.senkou.practicamarvel.ui.common.Screen {
+  Screen {
 
     val state by vm.state.collectAsState()
     val detailScreenState = rememberDetailScreenState()
 
-    com.senkou.practicamarvel.ui.common.MarvelScaffold(
+    MarvelScaffold(
       state = state,
       topBar = {
         state.ifSuccess {
@@ -72,7 +79,7 @@ fun DetailScreen(vm: DetailViewmodel, onBack: () -> Unit) {
 
           Card(
             modifier = Modifier.fillMaxWidth(),
-            shape = com.senkou.practicamarvel.ui.common.theme.AsymetricLarge,
+            shape = AsymetricLarge,
             elevation = CardDefaults.cardElevation(
               defaultElevation = 8.dp,
             )

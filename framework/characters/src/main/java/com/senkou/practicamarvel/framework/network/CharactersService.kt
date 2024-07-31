@@ -13,7 +13,7 @@ interface CharactersService {
   @GET("v1/public/characters/{id}")
   suspend fun getCharacterById(@Path("id") id: Int): RemoteResult
 
-  @GET("https://gateway.marvel.com:443/v1/public/characters/{id}/comics?limit=30")
+  @GET("v1/public/characters/{id}/comics?limit=30")
   suspend fun getComicsByCharacterId(@Path("id") id: Int): RemoteComicResult
 }
 
