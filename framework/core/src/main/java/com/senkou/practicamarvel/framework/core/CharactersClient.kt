@@ -12,6 +12,7 @@ import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import retrofit2.create
 import java.math.BigInteger
 import java.security.MessageDigest
+import java.util.concurrent.TimeUnit
 
 internal class CharactersClient(
   private val apiKey: String,
@@ -25,6 +26,9 @@ internal class CharactersClient(
   private val okHttpClient = OkHttpClient.Builder()
     .addInterceptor(::apiKeyAsQuery)
     .addInterceptor(intercepter)
+    .connectTimeout(200, TimeUnit.SECONDS)
+    .writeTimeout(200, TimeUnit.SECONDS)
+    .readTimeout(300, TimeUnit.SECONDS)
     .build()
 
   private val json = Json {

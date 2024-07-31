@@ -7,13 +7,13 @@ import retrofit2.http.Path
 
 interface CharactersService {
 
-  @GET("v1/public/characters?modifiedSince=2010-01-01T19%3A00%3A00-0500&limit=50&offset=50")
+  @GET("v1/public/characters?modifiedSince=2010-01-01T19%3A00%3A00-0500&limit=10&offset=50")
   suspend fun getCharacters(): RemoteResult
 
   @GET("v1/public/characters/{id}")
   suspend fun getCharacterById(@Path("id") id: Int): RemoteResult
 
-  @GET("v1/public/characters/{id}/comics?limit=30")
+  @GET("v1/public/characters/{id}/comics?limit=10")
   suspend fun getComicsByCharacterId(@Path("id") id: Int): RemoteComicResult
 }
 
