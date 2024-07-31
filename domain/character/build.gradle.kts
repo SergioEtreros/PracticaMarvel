@@ -1,5 +1,6 @@
 plugins {
   id("practicamarvel.jvm.library")
+  id("practicamarvel.di.library")
 }
 
 java {

@@ -8,13 +8,17 @@ import com.senkou.practicamarvel.domain.character.usecases.GetCharacterComicsUse
 import com.senkou.practicamarvel.domain.character.usecases.GetCharacterDetailsUseCase
 import com.senkou.practicamarvel.ui.common.ifSuccess
 import com.senkou.practicamarvel.ui.common.stateAsResultIn
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
+import javax.inject.Named
 
-class DetailViewmodel(
-  characterId: Int,
+@HiltViewModel
+class DetailViewmodel @Inject constructor(
+  @Named("characterId") characterId: Int,
   getCharacterDetailsUseCase: GetCharacterDetailsUseCase,
   getCharacterComicsUseCase: GetCharacterComicsUseCase,
   private val favoriteToggleUseCase: FavoriteToggleUseCase

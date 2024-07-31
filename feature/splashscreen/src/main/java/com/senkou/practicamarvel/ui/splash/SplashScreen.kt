@@ -1,5 +1,6 @@
 package com.senkou.practicamarvel.ui.splash
 
+import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -12,7 +13,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.senkou.practicamarvel.ui.common.Result
 import com.senkou.practicamarvel.ui.common.Screen
 import com.senkou.practicamarvel.ui.common.theme.rojoMarvel
@@ -21,7 +24,7 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(
-  model: HomeScreenViewmodel,
+  model: HomeScreenViewmodel = hiltViewModel(),
   navigateMainScreen: () -> Unit
 ) {
 
@@ -48,30 +51,13 @@ fun SplashScreen(
   }
 }
 
-//@Preview(
-//  showBackground = true,
-//  showSystemUi = true,
-//  uiMode = Configuration.UI_MODE_NIGHT_YES
-//)
-//@Composable
-//fun SplashScreenPreview() {
-//
-//  val marvelDB = (LocalContext.current.applicationContext as PracticaMarvelApp).marvelDB
-//  val charactersRepository = CharactersRepository(
-//    charactersLocalDatasource = CharactersRoomDataSource(
-//      marvelDB.characterDao(),
-//      marvelDB.comicsDao()
-//    ),
-//    charactersRemoteDatasource = CharacterServerDataSource(CharactersClient.instance)
-//  )
-//
-//  SplashScreen(
-//    viewModel {
-//      com.senkou.practicamarvel.ui.home.HomeScreenViewmodel(
-//        com.senkou.practicamarvel.domain.character.usecases.GetCharacterListUseCase(
-//          charactersRepository
-//        )
-//      )
-//    }
-//  ) {}
-//}
+@Preview(
+  showBackground = true,
+  showSystemUi = true,
+  uiMode = Configuration.UI_MODE_NIGHT_YES
+)
+@Composable
+fun SplashScreenPreview() {
+
+  SplashScreen {}
+}

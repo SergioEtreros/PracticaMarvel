@@ -1,5 +1,6 @@
 plugins {
   id("practicamarvel.android.library.compose")
+  alias(libs.plugins.kotlinxSerialization)
 }
 
 android {

@@ -1,4 +1,4 @@
-package com.senkou.practicamarvel.ui.navigation
+package com.senkou.practicamarvel.ui.common
 
 import kotlinx.serialization.Serializable
 

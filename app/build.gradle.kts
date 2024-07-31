@@ -3,6 +3,7 @@ plugins {
   alias(libs.plugins.google.devtools.ksp)
   id("practicamarvel.android.application")
   id("practicamarvel.android.application.compose")
+  id("practicamarvel.di.library.compose")
 }
 
 android {
