@@ -21,8 +21,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.senkou.practicamarvel.R
 import com.senkou.practicamarvel.domain.character.entities.Character
+import com.senkou.practicamarvel.ui.characters.R
 import com.senkou.practicamarvel.ui.common.MarvelScaffold
 import com.senkou.practicamarvel.ui.common.Screen
 
