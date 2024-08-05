@@ -10,13 +10,14 @@ class CharactersRepository @Inject constructor(
    private val charactersRemoteDatasource: CharactersRemoteDataSource
 ) {
 
-   val characters = charactersLocalDatasource.characters.onEach { localCharacters ->
+   val characters
+      get() = charactersLocalDatasource.characters.onEach { localCharacters ->
 
-      if (localCharacters.isEmpty()) {
-         val remoteCharacters = charactersRemoteDatasource.getCharacters()
-         charactersLocalDatasource.saveAllCharacters(remoteCharacters)
+         if (localCharacters.isEmpty()) {
+            val remoteCharacters = charactersRemoteDatasource.getCharacters()
+            charactersLocalDatasource.saveAllCharacters(remoteCharacters)
+         }
       }
-   }//.map { localCharacters -> localCharacters.map { it.toDomainCharacter() } }
 
    fun fetchCharacterById(id: Int) =
       charactersLocalDatasource.getCharacter(id).onEach { localCharacter ->
@@ -26,7 +27,7 @@ class CharactersRepository @Inject constructor(
 
             charactersLocalDatasource.saveCharacter(remoteCharacter)
          }
-      }//.map { checkNotNull(it).toDomainCharacter() }
+      }
          .filterNotNull()
 
    fun getComicsByCharacterId(characterId: Int) =
@@ -37,7 +38,7 @@ class CharactersRepository @Inject constructor(
 
             charactersLocalDatasource.saveComics(remoteComics)
          }
-      }//.map { comics -> comics.map { it.imgUrl } }
+      }
 
    suspend fun favoriteToggle(character: Character) {
       charactersLocalDatasource.saveCharacter(
@@ -45,12 +46,3 @@ class CharactersRepository @Inject constructor(
       )
    }
 }
-
-//private fun RoomCharacter.toDomainCharacter(): DomainCharacter =
-//  DomainCharacter(
-//    id = id,
-//    name = name,
-//    description = description,
-//    imageUrl = imageUrl,
-//    favorite = favorite
-//  )
