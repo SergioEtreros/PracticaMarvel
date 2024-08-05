@@ -12,37 +12,42 @@ import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 internal fun Project.configureKotlinAndroid(
-  commonExtension: CommonExtension<*, *, *, *, *, *>,
+   commonExtension: CommonExtension<*, *, *, *, *, *>,
 ) {
-  commonExtension.apply {
-    compileSdk = 34
+   commonExtension.apply {
+      compileSdk = 34
 
-    defaultConfig {
-      minSdk = 24
-    }
-
-    compileOptions {
-      sourceCompatibility = JavaVersion.VERSION_17
-      targetCompatibility = JavaVersion.VERSION_17
-    }
-
-    // Use withType to workaround https://youtrack.jetbrains.com/issue/KT-55947
-    tasks.withType<KotlinCompile>().configureEach {
-      kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
+      defaultConfig {
+         minSdk = 24
       }
-    }
 
-    dependencies {
-      add("implementation", libs.findLibrary("androidx.core.ktx").get())
-      add("implementation", libs.findLibrary("androidx.lifecycle.runtime.ktx").get())
-    }
-  }
+      compileOptions {
+         sourceCompatibility = JavaVersion.VERSION_17
+         targetCompatibility = JavaVersion.VERSION_17
+      }
+
+      // Use withType to workaround https://youtrack.jetbrains.com/issue/KT-55947
+      tasks.withType<KotlinCompile>().configureEach {
+         kotlinOptions {
+            jvmTarget = JavaVersion.VERSION_17.toString()
+         }
+      }
+
+      dependencies {
+         add("implementation", libs.findLibrary("androidx.core.ktx").get())
+         add("implementation", libs.findLibrary("androidx.lifecycle.runtime.ktx").get())
+      }
+   }
 }
 
 internal fun Project.configureKotlinJvm() {
-  extensions.configure<JavaPluginExtension> {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
-  }
+   extensions.configure<JavaPluginExtension> {
+      sourceCompatibility = JavaVersion.VERSION_17
+      targetCompatibility = JavaVersion.VERSION_17
+   }
+
+   dependencies {
+      add("testImplementation", libs.findLibrary("junit").get())
+      add("testImplementation", libs.findLibrary("mockito.kotlin").get())
+   }
 }
