@@ -1,8 +1,8 @@
 package com.senkou.practicamarvel.domain.character.data
 
 import com.senkou.practicamarvel.domain.character.entities.Character
-import com.senkou.practicamarvel.domain.character.usecases.sampleCharacter
-import com.senkou.practicamarvel.domain.character.usecases.sampleCharacters
+import com.senkou.practicamarvel.test.unit.sampleCharacter
+import com.senkou.practicamarvel.test.unit.sampleCharacters
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking

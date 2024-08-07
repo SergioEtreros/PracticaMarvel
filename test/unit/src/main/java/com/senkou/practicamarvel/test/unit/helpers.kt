@@ -1,4 +1,4 @@
-package com.senkou.practicamarvel.domain.character.usecases
+package com.senkou.practicamarvel.test.unit
 
 import com.senkou.practicamarvel.domain.character.entities.Character
 import com.senkou.practicamarvel.domain.character.entities.Comic

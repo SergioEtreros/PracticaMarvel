@@ -1,6 +1,7 @@
 package com.senkou.practicamarvel.domain.character.usecases
 
 import com.senkou.practicamarvel.domain.character.data.CharactersRepository
+import com.senkou.practicamarvel.test.unit.sampleCharacter
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import org.mockito.Mockito.mock

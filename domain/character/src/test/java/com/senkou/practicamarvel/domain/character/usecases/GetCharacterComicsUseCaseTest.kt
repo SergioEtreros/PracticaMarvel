@@ -1,5 +1,7 @@
 package com.senkou.practicamarvel.domain.character.usecases
 
+import com.senkou.practicamarvel.test.unit.sampleCharacter
+import com.senkou.practicamarvel.test.unit.sampleComics
 import kotlinx.coroutines.flow.flowOf
 import org.junit.Assert.assertEquals
 import org.junit.Test
