@@ -5,7 +5,7 @@ import com.senkou.practicamarvel.domain.character.entities.Comic
 
 fun sampleCharacter(id: Int) = Character(
    id = id,
-   name = "Name $1d",
+   name = "Name $id",
    description = "Description $id",
    imageUrl = "Image Url $id",
    favorite = false

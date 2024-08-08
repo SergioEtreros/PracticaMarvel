@@ -24,61 +24,72 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.senkou.practicamarvel.domain.character.entities.Character
 import com.senkou.practicamarvel.ui.characters.R
 import com.senkou.practicamarvel.ui.common.MarvelScaffold
+import com.senkou.practicamarvel.ui.common.Result
 import com.senkou.practicamarvel.ui.common.Screen
+
+@Composable
+fun HomeScreen(
+   model: HomeScreenViewmodel = hiltViewModel(),
+   onItemClick: (Character) -> Unit,
+) {
+
+   val state by model.state.collectAsState()
+
+   HomeScreen(state = state, onItemClick = onItemClick)
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-  model: HomeScreenViewmodel = hiltViewModel(),
-  onItemClick: (Character) -> Unit,
+   state: Result<List<Character>>,
+   onItemClick: (Character) -> Unit,
 ) {
-  Screen {
+   Screen {
 
-    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
-    val state by model.state.collectAsState()
+      val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
-    MarvelScaffold(
-      state = state,
-      topBar = {
-        TopAppBar(
-          title = {
-            Text(text = stringResource(id = R.string.title))
-          },
-          scrollBehavior = scrollBehavior
-        )
-      },
-      modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-      contentWindowInsets = WindowInsets.safeDrawing
-    ) { paddingValues, characters ->
+      MarvelScaffold(
+         state = state,
+         topBar = {
+            TopAppBar(
+               title = {
+                  Text(text = stringResource(id = R.string.title))
+               },
+               scrollBehavior = scrollBehavior
+            )
+         },
+         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+         contentWindowInsets = WindowInsets.safeDrawing
+      ) { paddingValues, characters ->
 
-      LazyVerticalGrid(
-        columns = GridCells.Adaptive(180.dp),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        modifier = Modifier.padding(horizontal = 12.dp),
-        contentPadding = paddingValues
-      ) {
+         LazyVerticalGrid(
+            columns = GridCells.Adaptive(180.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            modifier = Modifier.padding(horizontal = 12.dp),
+            contentPadding = paddingValues
+         ) {
 
-        items(characters, { it.id }) { character ->
-          CharacterItem(
-            character = character,
-            onClick = { onItemClick(character) }
-          )
-        }
+            items(characters, { it.id }) { character ->
+               CharacterItem(
+                  character = character,
+                  onClick = { onItemClick(character) }
+               )
+            }
+         }
       }
-    }
-  }
+   }
 }
 
 @Preview(
-  showBackground = true,
-  showSystemUi = true,
-  uiMode = Configuration.UI_MODE_NIGHT_YES
+   showBackground = true,
+   showSystemUi = true,
+   uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 @Composable
 fun HomeScreenPreview() {
 
-  Screen {
-    HomeScreen {}
-  }
+   Screen {
+      HomeScreen {}
+   }
 }

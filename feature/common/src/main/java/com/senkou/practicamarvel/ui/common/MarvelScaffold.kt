@@ -14,7 +14,7 @@ import androidx.compose.ui.graphics.Color
 
 @Composable
 fun <T> MarvelScaffold(
-  state: com.senkou.practicamarvel.ui.common.Result<T>,
+   state: Result<T>,
   modifier: Modifier = Modifier,
   topBar: @Composable () -> Unit = {},
   bottomBar: @Composable () -> Unit = {},
@@ -38,9 +38,9 @@ fun <T> MarvelScaffold(
     floatingActionButtonPosition = floatingActionButtonPosition
   ) { paddingValues ->
     when (state) {
-      is com.senkou.practicamarvel.ui.common.Result.Loading -> LoadingIndicator(paddingValues)
-      is com.senkou.practicamarvel.ui.common.Result.Error -> Text(text = state.throwable.message.orEmpty())
-      is com.senkou.practicamarvel.ui.common.Result.Success -> content(paddingValues, state.data)
+       is Result.Loading -> LoadingIndicator(paddingValues)
+       is Result.Error -> Text(text = state.throwable.message.orEmpty())
+       is Result.Success -> content(paddingValues, state.data)
     }
   }
 }

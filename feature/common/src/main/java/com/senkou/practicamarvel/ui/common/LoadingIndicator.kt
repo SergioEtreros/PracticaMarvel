@@ -8,13 +8,17 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
+
+const val LOADING_INDICATOR_TEST_TAG = "LoadingIndicator"
 
 @Composable
 fun LoadingIndicator(paddingValues: PaddingValues) {
   Box(
     modifier = Modifier
-      .fillMaxSize()
-      .padding(paddingValues),
+       .fillMaxSize()
+       .padding(paddingValues)
+       .testTag(LOADING_INDICATOR_TEST_TAG),
     contentAlignment = Alignment.Center
   ) {
     CircularProgressIndicator()
