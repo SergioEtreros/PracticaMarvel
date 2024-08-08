@@ -20,4 +20,8 @@ fun sampleComic(characterId: Int, id: Int) = Comic(
 )
 
 fun sampleComics(characterId: Int, vararg ids: Int) =
-   ids.map { sampleComic(it, characterId).imgUrl }
+   ids.map { sampleComic(characterId, it).imgUrl }
+
+
+fun sampleComicsObject(characterId: Int, vararg ids: Int) =
+   ids.map { sampleComic(characterId, it) }

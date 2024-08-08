@@ -19,8 +19,6 @@ internal class CharactersRoomDataSource @Inject constructor(
 
   override fun getCharacter(id: Int) = characterDao.getCharacter(id).map { it?.toDomainCharacter() }
 
-  override suspend fun isEmpty() = characterDao.count() <= 0
-
   override suspend fun saveCharacter(character: DomainCharacter) =
     characterDao.insertCharacter(character.toRoomModel())
 
