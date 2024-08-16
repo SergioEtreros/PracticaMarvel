@@ -8,5 +8,7 @@ android {
 }
 
 dependencies {
+   implementation(project(":domain:character"))
   implementation(project(":feature:characters"))
+   testImplementation(project(":feature:characters"))
 }

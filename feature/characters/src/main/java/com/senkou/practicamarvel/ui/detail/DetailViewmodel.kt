@@ -18,41 +18,48 @@ import javax.inject.Named
 
 @HiltViewModel
 class DetailViewmodel @Inject constructor(
-  @Named("characterId") characterId: Int,
-  getCharacterDetailsUseCase: GetCharacterDetailsUseCase,
-  getCharacterComicsUseCase: GetCharacterComicsUseCase,
-  private val favoriteToggleUseCase: FavoriteToggleUseCase
+   @Named("characterId") private val characterId: Int,
+   getCharacterDetailsUseCase: GetCharacterDetailsUseCase,
+   private val getCharacterComicsUseCase: GetCharacterComicsUseCase,
+   private val favoriteToggleUseCase: FavoriteToggleUseCase
 ) : ViewModel() {
 
-  private var _state = MutableStateFlow(UiState())
-  val state = _state.combine(getCharacterDetailsUseCase(characterId)) { state, character ->
-    state.copy(character = character)
-  }.combine(getCharacterComicsUseCase(characterId)) { state, comics ->
-    state.copy(comics = comics)
-  }.stateAsResultIn(viewModelScope)
+   private var _state = MutableStateFlow(UiState())
 
-  data class UiState(
-    val character: Character? = null,
-    val comics: List<String> = emptyList(),
-    val message: String? = null
-  )
+   val state = _state.combine(getCharacterDetailsUseCase(characterId)) { state, character ->
+      state.copy(character = character)
+   }.stateAsResultIn(viewModelScope)
 
-  fun onFavoriteClick() {
-    state.value.ifSuccess {
-      viewModelScope.launch {
-        it.character?.let { character ->
-          _state.update { uiState ->
-            uiState.copy(
-              message = if (!character.favorite) "Added to favorites" else "Removed from favorites"
-            )
-          }
-          favoriteToggleUseCase(character)
-        }
+   fun loadComics() {
+      state.value.ifSuccess {
+         viewModelScope.launch {
+            _state.update { it.copy(comics = getCharacterComicsUseCase(characterId)) }
+         }
       }
-    }
-  }
+   }
 
-  fun onMessageShown() {
-    _state.update { it.copy(message = null) }
-  }
+   fun onFavoriteClick() {
+      state.value.ifSuccess {
+         viewModelScope.launch {
+            it.character?.let { character ->
+               _state.update { uiState ->
+                  uiState.copy(
+                     message = if (!character.favorite) "Added to favorites" else "Removed from favorites"
+                  )
+               }
+               favoriteToggleUseCase(character)
+            }
+         }
+      }
+   }
+
+   fun onMessageShown() {
+      _state.update { it.copy(message = null) }
+   }
+
+   data class UiState(
+      val character: Character? = null,
+      val comics: List<String> = emptyList(),
+      val message: String? = null
+   )
 }

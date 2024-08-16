@@ -1,4 +1,5 @@
 import com.android.build.api.dsl.ApplicationExtension
+import com.senkou.practicamarvel.addAndroidTestDependencies
 import com.senkou.practicamarvel.configureAndroidCompose
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -9,18 +10,11 @@ class AndroidApplicationComposeConventionPlugin : Plugin<Project> {
     with(target) {
       with(pluginManager) {
         apply("com.android.application")
-//        apply("practicamarvel.android.library.compose")
-//        apply("org.jetbrains.kotlin.android")
-//        apply("org.jetbrains.kotlin.plugin.serialization")
         val extensions = extensions.getByType<ApplicationExtension>()
         configureAndroidCompose(extensions)
+
+         addAndroidTestDependencies()
       }
-
-
-//      dependencies {
-//        add("implementation", project(":feature:common"))
-//        add("implementation", libs.findLibrary("androidx.lifecycle.viewmodel.compose").get())
-//      }
     }
   }
 }

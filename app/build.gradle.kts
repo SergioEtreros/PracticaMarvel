@@ -14,7 +14,7 @@ android {
     versionCode = 1
     versionName = "1.0"
 
-    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+     testInstrumentationRunner = "com.senkou.practicamarvel.di.HiltTestRunner"
     vectorDrawables {
       useSupportLibrary = true
     }
@@ -46,11 +46,13 @@ dependencies {
   implementation(libs.androidx.activity.compose)
   implementation(libs.room.runtime)
   implementation(libs.room.ktx)
+   implementation(libs.androidx.tracing)
 
-  testImplementation(libs.junit)
-  androidTestImplementation(libs.androidx.junit)
-  androidTestImplementation(libs.androidx.espresso.core)
-  androidTestImplementation(platform(libs.androidx.compose.bom))
-  androidTestImplementation(libs.androidx.ui.test.junit4)
-  debugImplementation(libs.androidx.ui.test.manifest)
+
+   androidTestImplementation(libs.hilt.android.testing)
+   androidTestImplementation(libs.room.ktx)
+   kspAndroidTest(libs.hilt.compiler)
+   kspAndroidTest(libs.room.compiler)
+   androidTestImplementation(libs.okhttp.mockwebserver)
+
 }

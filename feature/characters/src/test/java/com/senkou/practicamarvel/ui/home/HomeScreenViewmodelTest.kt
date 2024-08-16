@@ -69,6 +69,8 @@ class HomeScreenViewmodelTest {
 
       val vm = HomeScreenViewmodel(getCharacterListUseCase)
 
+      // este no pasa
+
       vm.state.test {
          assertEquals(Result.Loading, awaitItem())
          awaitItem()

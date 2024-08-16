@@ -16,7 +16,8 @@ import java.util.concurrent.TimeUnit
 
 internal class CharactersClient(
   private val apiKey: String,
-  private val privApiKey: String
+  private val privApiKey: String,
+  baseUrl: String
 ) {
 
   private val intercepter = HttpLoggingInterceptor().apply {
@@ -36,7 +37,7 @@ internal class CharactersClient(
   }
 
   val instance = Retrofit.Builder()
-    .baseUrl("https://gateway.marvel.com:443/")
+     .baseUrl(baseUrl)
     .client(okHttpClient)
     .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
     .build()

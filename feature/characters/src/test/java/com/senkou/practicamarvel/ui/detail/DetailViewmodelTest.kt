@@ -20,8 +20,10 @@ import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 import org.mockito.kotlin.any
+import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
+import org.mockito.kotlin.wheneverBlocking
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(MockitoJUnitRunner::class)
@@ -43,12 +45,11 @@ class DetailViewmodelTest {
 
    private val character = sampleCharacter(3)
    private val comics = sampleComics(character.id, 2, 3)
-   private val state = DetailViewmodel.UiState(character, comics)
 
    @Before
    fun setUp() {
       whenever(getCharacterDetailsUseCase(3)).thenReturn(flowOf(character))
-      whenever(getCharacterComicsUseCase(3)).thenReturn(flowOf(comics))
+      wheneverBlocking { (getCharacterComicsUseCase(3)) }.doReturn(comics)
       vm = DetailViewmodel(
          3,
          getCharacterDetailsUseCase,
@@ -58,8 +59,13 @@ class DetailViewmodelTest {
    }
 
    @Test
-   fun `UI is updated with the movie on start`() = runTest {
+   fun `UI is updated with the character on start`() = runTest(coroutinesTestRule.testDispatcher) {
 
+      val state = DetailViewmodel.UiState(character, comics)
+
+      // este no pasa si no dejo la lista de comics vacía
+
+      vm.loadComics()
       vm.state.test {
          assertEquals(Result.Loading, awaitItem())
          assertEquals(Result.Success(state), awaitItem())
@@ -69,6 +75,9 @@ class DetailViewmodelTest {
    @Test
    fun `Favorite action calls corresponding use case`() =
       runTest(coroutinesTestRule.testDispatcher) {
+
+         val state = DetailViewmodel.UiState(character, emptyList())
+
          vm.state.test {
             assertEquals(Result.Loading, awaitItem())
             assertEquals(Result.Success(state), awaitItem())

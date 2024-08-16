@@ -27,89 +27,110 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.senkou.practicamarvel.ui.common.MarvelScaffold
+import com.senkou.practicamarvel.ui.common.Result
 import com.senkou.practicamarvel.ui.common.Screen
 import com.senkou.practicamarvel.ui.common.ifSuccess
 import com.senkou.practicamarvel.ui.common.theme.AsymetricLarge
 
+
+@Composable
+fun DetailScreen(
+   vm: DetailViewmodel = hiltViewModel(),
+   onBack: () -> Unit
+) {
+
+   val state by vm.state.collectAsState()
+
+   vm.loadComics()
+
+   DetailScreen(
+      state = state,
+      onBack = onBack,
+      onFavortiteClicked = vm::onFavoriteClick,
+      onMessageShown = vm::onMessageShown
+   )
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailScreen(
-  vm: DetailViewmodel = hiltViewModel(),
-  onBack: () -> Unit
+   state: Result<DetailViewmodel.UiState>,
+   onBack: () -> Unit,
+   onFavortiteClicked: () -> Unit,
+   onMessageShown: () -> Unit
 ) {
 
-  Screen {
+   Screen {
 
-    val state by vm.state.collectAsState()
-    val detailScreenState = rememberDetailScreenState()
+      val detailScreenState = rememberDetailScreenState()
 
-    MarvelScaffold(
-      state = state,
-      topBar = {
-        state.ifSuccess {
-          DetailTopBar(
-            charName = it.character?.name.orEmpty(),
-            favorite = it.character?.favorite ?: false,
-            scrollBehavior = detailScreenState.scrollBehavior,
-            onBack = onBack,
-            onFavorite = { vm.onFavoriteClick() }
-          )
-        }
-      },
-      snackbarHost = { SnackbarHost(hostState = detailScreenState.snackbarHostState) },
-      modifier = Modifier.nestedScroll(detailScreenState.scrollBehavior.nestedScrollConnection),
-      contentWindowInsets = WindowInsets.safeDrawing
-    ) { paddingValues, stateSucces ->
+      MarvelScaffold(
+         state = state,
+         topBar = {
+            state.ifSuccess {
+               DetailTopBar(
+                  charName = it.character?.name.orEmpty(),
+                  favorite = it.character?.favorite ?: false,
+                  scrollBehavior = detailScreenState.scrollBehavior,
+                  onBack = onBack,
+                  onFavorite = onFavortiteClicked
+               )
+            }
+         },
+         snackbarHost = { SnackbarHost(hostState = detailScreenState.snackbarHostState) },
+         modifier = Modifier.nestedScroll(detailScreenState.scrollBehavior.nestedScrollConnection),
+         contentWindowInsets = WindowInsets.safeDrawing
+      ) { paddingValues, stateSucces ->
 
-      val character = stateSucces.character
+         val character = stateSucces.character
 
-      detailScreenState.ShowMessageEffect(message = stateSucces.message) {
-        vm.onMessageShown()
+         detailScreenState.ShowMessageEffect(message = stateSucces.message) {
+            onMessageShown()
+         }
+
+         character?.let {
+            Column(
+               modifier = Modifier
+                  .fillMaxSize()
+                  .padding(top = paddingValues.calculateTopPadding())
+                  .padding(horizontal = 16.dp),
+               horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+               Spacer(modifier = Modifier.height(16.dp))
+
+               Card(
+                  modifier = Modifier.fillMaxWidth(),
+                  shape = AsymetricLarge,
+                  elevation = CardDefaults.cardElevation(
+                     defaultElevation = 8.dp,
+                  )
+               ) {
+
+                  AsyncImage(
+                     model = character.imageUrl,
+                     contentDescription = character.name,
+                     contentScale = ContentScale.Crop,
+                     modifier = Modifier
+                        .aspectRatio(16f / 9f)
+                  )
+               }
+
+               Spacer(modifier = Modifier.height(24.dp))
+
+               if (character.description.isNotEmpty()) {
+                  Text(
+                     text = character.description,
+                     style = MaterialTheme.typography.bodyLarge,
+                     textAlign = TextAlign.Justify
+                  )
+                  Spacer(modifier = Modifier.height(24.dp))
+               }
+
+               ComicGrid(stateSucces.comics)
+            }
+         }
       }
-
-      character?.let {
-        Column(
-          modifier = Modifier
-            .fillMaxSize()
-            .padding(top = paddingValues.calculateTopPadding())
-            .padding(horizontal = 16.dp),
-          horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-          Spacer(modifier = Modifier.height(16.dp))
-
-          Card(
-            modifier = Modifier.fillMaxWidth(),
-            shape = AsymetricLarge,
-            elevation = CardDefaults.cardElevation(
-              defaultElevation = 8.dp,
-            )
-          ) {
-
-            AsyncImage(
-              model = character.imageUrl,
-              contentDescription = character.name,
-              contentScale = ContentScale.Crop,
-              modifier = Modifier
-                .aspectRatio(16f / 9f)
-            )
-          }
-
-          Spacer(modifier = Modifier.height(24.dp))
-
-          if (character.description.isNotEmpty()) {
-            Text(
-              text = character.description,
-              style = MaterialTheme.typography.bodyLarge,
-              textAlign = TextAlign.Justify
-            )
-            Spacer(modifier = Modifier.height(24.dp))
-          }
-
-          ComicGrid(stateSucces.comics)
-        }
-      }
-    }
-  }
+   }
 }
 
 

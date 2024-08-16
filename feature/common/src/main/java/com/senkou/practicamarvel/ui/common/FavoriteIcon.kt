@@ -7,12 +7,13 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.senkou.practicamarvel.ui.common.theme.rojoMarvel
 
 @Composable
 fun FavoriteIcon(favorite: Boolean, modifier: Modifier = Modifier) {
   Icon(
     modifier = modifier,
-    tint = if (favorite) com.senkou.practicamarvel.ui.common.theme.rojoMarvel else LocalContentColor.current,
+     tint = if (favorite) rojoMarvel else LocalContentColor.current,
     imageVector = if (favorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
     contentDescription = "Favorite"
   )

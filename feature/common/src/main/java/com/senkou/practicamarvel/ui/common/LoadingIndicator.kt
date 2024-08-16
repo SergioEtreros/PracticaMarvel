@@ -9,11 +9,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.unit.dp
 
 const val LOADING_INDICATOR_TEST_TAG = "LoadingIndicator"
 
 @Composable
-fun LoadingIndicator(paddingValues: PaddingValues) {
+fun LoadingIndicator(paddingValues: PaddingValues = PaddingValues(0.dp)) {
   Box(
     modifier = Modifier
        .fillMaxSize()

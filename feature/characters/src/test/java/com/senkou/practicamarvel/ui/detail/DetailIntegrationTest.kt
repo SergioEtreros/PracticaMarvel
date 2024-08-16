@@ -27,7 +27,7 @@ class DetailIntegrationTest {
    private lateinit var vm: DetailViewmodel
    private val character = sampleCharacter(3)
    private val comics = sampleComicsObject(3, 2, 4)
-   private val state = DetailViewmodel.UiState(character, comics.map { it.imgUrl })
+   private val state = DetailViewmodel.UiState(character, emptyList())
 
    @Before
    fun setUp() {

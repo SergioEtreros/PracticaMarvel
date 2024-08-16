@@ -16,7 +16,7 @@ class HomeScreenTest {
    @get:Rule
    val composeTestRule = createComposeRule()
 
-   val characters = sampleCharacters(1, 3, 4)
+   private val characters = sampleCharacters(1, 3, 4)
 
    @Test
    fun whenLoadindgState_ShowLoading(): Unit = with(composeTestRule) {

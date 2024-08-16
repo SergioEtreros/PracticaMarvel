@@ -1,5 +1,6 @@
 package com.senkou.practicamarvel.framework.database
 
+import com.senkou.practicamarvel.domain.character.data.CharactersLocalDataSource
 import com.senkou.practicamarvel.domain.character.entities.Comic
 import com.senkou.practicamarvel.framework.database.dao.CharacterDao
 import com.senkou.practicamarvel.framework.database.dao.ComicsDao
@@ -12,7 +13,7 @@ import com.senkou.practicamarvel.domain.character.entities.Character as DomainCh
 internal class CharactersRoomDataSource @Inject constructor(
   private val characterDao: CharacterDao,
   private val comicsDao: ComicsDao
-) : com.senkou.practicamarvel.domain.character.data.CharactersLocalDataSource {
+) : CharactersLocalDataSource {
 
   override val characters =
     characterDao.getCharacters().map { it.map { character -> character.toDomainCharacter() } }
@@ -25,8 +26,8 @@ internal class CharactersRoomDataSource @Inject constructor(
   override suspend fun saveAllCharacters(characters: List<DomainCharacter>) =
     characterDao.insertCharacters(characters.map { it.toRoomModel() })
 
-  override fun getComicsByCharacterId(id: Int) =
-    comicsDao.getComicsByCharacterId(id).map { comics -> comics.map { it.imgUrl } }
+   override suspend fun getComicsByCharacterId(id: Int) =
+      comicsDao.getComicsByCharacterId(id).map { it.imgUrl }
 
   override suspend fun saveComics(comics: List<Comic>) =
     comicsDao.insertComics(comics.map { it.toRoomModel() })

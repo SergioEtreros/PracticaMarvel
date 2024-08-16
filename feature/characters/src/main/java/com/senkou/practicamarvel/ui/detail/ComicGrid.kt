@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.senkou.practicamarvel.ui.characters.R
+import com.senkou.practicamarvel.ui.common.LoadingIndicator
 
 
 @Composable
@@ -26,15 +27,21 @@ fun ComicGrid(comics: List<String>) {
 
   Spacer(modifier = Modifier.height(16.dp))
 
-  LazyVerticalGrid(
-    columns = GridCells.Adaptive(120.dp),
-    horizontalArrangement = Arrangement.spacedBy(12.dp),
-    verticalArrangement = Arrangement.spacedBy(16.dp),
-    contentPadding = PaddingValues(bottom = 24.dp)
-  ) {
+   if (comics.isNotEmpty()) {
+      LazyVerticalGrid(
+         columns = GridCells.Adaptive(120.dp),
+         horizontalArrangement = Arrangement.spacedBy(12.dp),
+         verticalArrangement = Arrangement.spacedBy(16.dp),
+         contentPadding = PaddingValues(bottom = 24.dp)
+      ) {
 
-    items(comics) { image ->
-      ComicItem(image = image)
-    }
-  }
+         items(comics) { image ->
+            ComicItem(image = image)
+         }
+      }
+   } else {
+      LoadingIndicator()
+   }
+
+
 }

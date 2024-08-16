@@ -17,7 +17,7 @@ fun buildCharacterRepositoryWith(
 ): CharactersRepository {
    val localDataSource = FakeLocalDataSource().apply {
       inMemoryCharacters.value = localDataCharacter
-      inMemoryComics.value = localDataComics
+      inMemoryComics = localDataComics
    }
 
    val remoteDataSource = FakeRemoteDataSource(remoteDataCharacter)
@@ -40,7 +40,7 @@ class FakeRemoteDataSource(private val characters: List<Character>) : Characters
 class FakeLocalDataSource : CharactersLocalDataSource {
 
    val inMemoryCharacters = MutableStateFlow<List<Character>>(emptyList())
-   val inMemoryComics = MutableStateFlow<List<Comic>>(emptyList())
+   var inMemoryComics = listOf<Comic>()
 
    override val characters: Flow<List<Character>> = inMemoryCharacters
 
@@ -56,17 +56,15 @@ class FakeLocalDataSource : CharactersLocalDataSource {
       inMemoryCharacters.value = characters
    }
 
-   override fun getComicsByCharacterId(id: Int): Flow<List<String>> =
-      inMemoryComics.map {
-         it.filter { comic -> comic.characterId == id }.map { item -> item.imgUrl }
-      }
+   override suspend fun getComicsByCharacterId(id: Int): List<String> =
+      inMemoryComics.filter { comic -> comic.characterId == id }.map { item -> item.imgUrl }
 
    override suspend fun saveComics(comics: List<Comic>) {
-      inMemoryComics.value = comics
+      inMemoryComics = comics
    }
 
    override suspend fun deleteAll() {
       inMemoryCharacters.value = emptyList()
-      inMemoryComics.value = emptyList()
+      inMemoryComics = emptyList()
    }
 }

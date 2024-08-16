@@ -10,10 +10,14 @@ import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import com.senkou.practicamarvel.ui.characters.R
 import com.senkou.practicamarvel.ui.common.FavoriteIcon
+
+const val FAVORITE_TEST_TAG = "FavoriteButton"
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
@@ -41,7 +45,10 @@ fun DetailTopBar(
       }
     },
     actions = {
-      IconButton(onClick = onFavorite) {
+       IconButton(
+          modifier = Modifier.testTag(FAVORITE_TEST_TAG),
+          onClick = onFavorite
+       ) {
         FavoriteIcon(favorite)
       }
     },

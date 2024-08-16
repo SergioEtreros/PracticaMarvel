@@ -13,10 +13,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 internal object FrameworkCoreModule {
 
-   @Provides
-   @Singleton
-   fun provideDatabase(app: Application) =
-      Room.databaseBuilder(app, MarvelDB::class.java, "marvel").build()
+
 
    @Provides
    fun provideCharacterDao(db: MarvelDB) = db.characterDao()
@@ -28,6 +25,22 @@ internal object FrameworkCoreModule {
    @Singleton
    fun provideCharactersService(
       @Named("api_key") apiKey: String,
-      @Named("priv_api_key") privApiKey: String
-   ) = CharactersClient(apiKey, privApiKey).instance
+      @Named("priv_api_key") privApiKey: String,
+      @Named("base_url") baseUrl: String
+   ) = CharactersClient(apiKey, privApiKey, baseUrl).instance
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+object FrameworkCoreExtrasModule {
+
+   @Provides
+   @Singleton
+   fun provideDatabase(app: Application) =
+      Room.databaseBuilder(app, MarvelDB::class.java, "marvel").build()
+
+   @Provides
+   @Singleton
+   @Named("base_url")
+   fun provideBaseUrl() = "https://gateway.marvel.com:443/"
 }
