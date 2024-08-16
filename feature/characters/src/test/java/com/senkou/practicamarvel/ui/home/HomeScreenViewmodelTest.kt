@@ -36,13 +36,13 @@ class HomeScreenViewmodelTest {
 
    @Before
    fun setUp() {
-      whenever(getCharacterListUseCase()).thenReturn(flowOf(characters))
+//      whenever(getCharacterListUseCase()).thenReturn(flowOf(characters))
       vm = HomeScreenViewmodel(getCharacterListUseCase)
    }
 
    @Test
    fun `Characters are requested at start`() = runTest {
-//      whenever(getCharacterListUseCase()).thenReturn(flowOf(characters))
+      whenever(getCharacterListUseCase()).thenReturn(flowOf(characters))
 //      val vm = HomeScreenViewmodel(getCharacterListUseCase)
 
       vm.state.first()
@@ -53,7 +53,7 @@ class HomeScreenViewmodelTest {
 
    @Test
    fun `Characters are requested`() = runTest {
-//      whenever(getCharacterListUseCase()).thenReturn(flowOf(characters))
+      whenever(getCharacterListUseCase()).thenReturn(flowOf(characters))
 //      val vm = HomeScreenViewmodel(getCharacterListUseCase)
 
       vm.state.test {
@@ -67,7 +67,7 @@ class HomeScreenViewmodelTest {
       val error = RuntimeException("Something went wrong")
       whenever(getCharacterListUseCase()).thenThrow(error)
 
-      val vm = HomeScreenViewmodel(getCharacterListUseCase)
+//      val vm = HomeScreenViewmodel(getCharacterListUseCase)
 
       // este no pasa
 

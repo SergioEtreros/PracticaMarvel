@@ -11,6 +11,7 @@ import com.senkou.practicamarvel.ui.common.Result
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -66,6 +67,7 @@ class DetailViewmodelTest {
       // este no pasa si no dejo la lista de comics vacía
 
       vm.loadComics()
+      advanceUntilIdle()
       vm.state.test {
          assertEquals(Result.Loading, awaitItem())
          assertEquals(Result.Success(state), awaitItem())

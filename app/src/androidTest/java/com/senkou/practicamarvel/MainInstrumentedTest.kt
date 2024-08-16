@@ -42,6 +42,9 @@ class MainInstrumentedTest {
    @Test
    fun click_a_character_goes_to_detail(): Unit = with(androidComposeRule) {
 
+      // este no pasa si la carga de los comics está en un combine del flow
+      // se queda cargando constantemente
+
       waitUntilAtLeastOneExists(hasText("Anita Blake"))
       onNodeWithText("Anita Blake").performClick()
 
