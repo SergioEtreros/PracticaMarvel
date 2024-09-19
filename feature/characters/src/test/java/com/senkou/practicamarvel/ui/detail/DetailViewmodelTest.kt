@@ -64,7 +64,7 @@ class DetailViewmodelTest {
 
       val state = DetailViewmodel.UiState(character, comics)
 
-      // este no pasa si no dejo la lista de comics vacía
+      //TODO no pasa si no dejo la lista de comics vacía
 
       vm.loadComics()
       advanceUntilIdle()

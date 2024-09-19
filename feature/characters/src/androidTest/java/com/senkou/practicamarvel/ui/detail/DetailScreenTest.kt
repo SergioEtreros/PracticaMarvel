@@ -107,7 +107,8 @@ class DetailScreenTest {
    fun whenFavoriteClicked_messageIsShown(): Unit = with(composeTestRule) {
       var message = ""
 
-      // ESTE NO PASA
+      //TODO no consigo que pase por el callback del onMessageShown, diría que es por ser un
+      // launcEffect, pero no estoy seguro
 
       setContent {
          DetailScreen(

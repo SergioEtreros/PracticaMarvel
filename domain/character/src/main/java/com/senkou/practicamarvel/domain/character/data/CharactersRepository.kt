@@ -32,12 +32,12 @@ class CharactersRepository @Inject constructor(
 
    suspend fun getComicsByCharacterId(characterId: Int): List<String> {
       val localComics = charactersLocalDatasource.getComicsByCharacterId(characterId)
-         if (localComics.isEmpty()) {
-            val remoteComics = charactersRemoteDatasource
-               .getComicsByCharacterId(characterId)
+      if (localComics.isEmpty()) {
+         val remoteComics = charactersRemoteDatasource
+            .getComicsByCharacterId(characterId)
 
-            charactersLocalDatasource.saveComics(remoteComics)
-         }
+         charactersLocalDatasource.saveComics(remoteComics)
+      }
 
       return charactersLocalDatasource.getComicsByCharacterId(characterId)
    }

@@ -1,51 +1,54 @@
 plugins {
-  alias(libs.plugins.kotlinxSerialization)
-  alias(libs.plugins.google.devtools.ksp)
-  id("practicamarvel.android.application")
-  id("practicamarvel.android.application.compose")
-  id("practicamarvel.di.library.compose")
+   alias(libs.plugins.kotlinxSerialization)
+   alias(libs.plugins.google.devtools.ksp)
+   id("practicamarvel.android.application")
+   id("practicamarvel.android.application.compose")
+   id("practicamarvel.di.library.compose")
 }
 
 android {
-  namespace = "com.senkou.practicamarvel"
+   namespace = "com.senkou.practicamarvel"
 
-  defaultConfig {
-    applicationId = "com.senkou.practicamarvel"
-    versionCode = 1
-    versionName = "1.0"
+   defaultConfig {
+      applicationId = "com.senkou.practicamarvel"
+      versionCode = 1
+      versionName = "1.0"
 
-     testInstrumentationRunner = "com.senkou.practicamarvel.di.HiltTestRunner"
-    vectorDrawables {
-      useSupportLibrary = true
-    }
-  }
+      testInstrumentationRunner = "com.senkou.practicamarvel.di.HiltTestRunner"
+      vectorDrawables {
+         useSupportLibrary = true
+      }
+   }
 
-  buildTypes {
-    release {
-      isMinifyEnabled = false
-      proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-    }
-  }
+   buildTypes {
+      release {
+         isMinifyEnabled = false
+         proguardFiles(
+            getDefaultProguardFile("proguard-android-optimize.txt"),
+            "proguard-rules.pro"
+         )
+      }
+   }
 
-  packaging {
-    resources {
-      excludes += "/META-INF/{AL2.0,LGPL2.1}"
-    }
-  }
+   packaging {
+      resources {
+         excludes += "/META-INF/{AL2.0,LGPL2.1}"
+      }
+   }
 }
 
 dependencies {
 
-  implementation(project(":domain:character"))
-  implementation(project(":framework:characters"))
-  implementation(project(":framework:core"))
-  implementation(project(":feature:characters"))
-  implementation(project(":feature:splashscreen"))
-  implementation(project(":feature:common"))
+   implementation(project(":domain:character"))
+   implementation(project(":framework:characters"))
+   implementation(project(":framework:core"))
+   implementation(project(":feature:characters"))
+   implementation(project(":feature:splashscreen"))
+   implementation(project(":feature:common"))
 
-  implementation(libs.androidx.activity.compose)
-  implementation(libs.room.runtime)
-  implementation(libs.room.ktx)
+   implementation(libs.androidx.activity.compose)
+   implementation(libs.room.runtime)
+   implementation(libs.room.ktx)
    implementation(libs.androidx.tracing)
 
 

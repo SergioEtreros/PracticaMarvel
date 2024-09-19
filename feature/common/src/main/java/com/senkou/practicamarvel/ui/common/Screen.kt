@@ -5,10 +5,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.senkou.practicamarvel.ui.common.theme.PracticaMarvelTheme
 
 @Composable
 fun Screen(content: @Composable () -> Unit) {
-  com.senkou.practicamarvel.ui.common.theme.PracticaMarvelTheme {
+  PracticaMarvelTheme {
     // A surface container using the 'background' color from the theme
     Surface(
       modifier = Modifier.fillMaxSize(),

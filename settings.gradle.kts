@@ -1,7 +1,5 @@
 @file:Suppress("UnstableApiUsage")
 
-include(":test:unit")
-
 pluginManagement {
   includeBuild("build-logic")
   repositories {
@@ -36,3 +34,5 @@ include(":feature:splashscreen")
 
 include(":framework:core")
 include(":framework:characters")
+
+include(":test:unit")

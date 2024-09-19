@@ -42,8 +42,9 @@ class MainInstrumentedTest {
    @Test
    fun click_a_character_goes_to_detail(): Unit = with(androidComposeRule) {
 
-      // este no pasa si la carga de los comics está en un combine del flow
-      // se queda cargando constantemente
+      //TODO no pasa si la carga de los comics está en un combine del flow
+      // se queda cargando constantemente, he probado añadiendo una nueva enqueue para mokear
+      // la seguna llamada de retrofit con otro json para los comics y tampoco
 
       waitUntilAtLeastOneExists(hasText("Anita Blake"))
       onNodeWithText("Anita Blake").performClick()

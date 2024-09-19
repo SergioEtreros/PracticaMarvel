@@ -9,20 +9,20 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
 sealed interface Result<out T> {
-  data class Success<T>(val data: T) : Result<T>
-  data class Error(val throwable: Throwable) : Result<Nothing>
-  data object Loading : Result<Nothing>
+   data class Success<T>(val data: T) : Result<T>
+   data class Error(val throwable: Throwable) : Result<Nothing>
+   data object Loading : Result<Nothing>
 }
 
 inline fun <T> Result<T>.ifSuccess(action: (T) -> Unit) {
-  if (this is Result.Success) action(data)
+   if (this is Result.Success) action(data)
 }
 
 fun <T> Flow<T>.stateAsResultIn(scope: CoroutineScope): StateFlow<Result<T>> =
-  map<T, Result<T>> { Result.Success(it) }
-    .catch { Result.Error(it) }
-    .stateIn(
-      scope = scope,
-      started = SharingStarted.WhileSubscribed(5000),
-      initialValue = Result.Loading
-    )
+   map<T, Result<T>> { Result.Success(it) }
+      .catch { emit(Result.Error(it)) }
+      .stateIn(
+         scope = scope,
+         started = SharingStarted.WhileSubscribed(5_000),
+         initialValue = Result.Loading
+      )
