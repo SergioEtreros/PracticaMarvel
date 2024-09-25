@@ -30,17 +30,15 @@ class CharactersRepository @Inject constructor(
       }
          .filterNotNull()
 
-   suspend fun getComicsByCharacterId(characterId: Int): List<String> {
-      val localComics = charactersLocalDatasource.getComicsByCharacterId(characterId)
-      if (localComics.isEmpty()) {
-         val remoteComics = charactersRemoteDatasource
-            .getComicsByCharacterId(characterId)
+   fun getComicsByCharacterId(characterId: Int) =
+      charactersLocalDatasource.getComicsByCharacterId(characterId).onEach { localComics ->
+         if (localComics.isEmpty()) {
+            val remoteComics = charactersRemoteDatasource
+               .getComicsByCharacterId(characterId)
 
-         charactersLocalDatasource.saveComics(remoteComics)
+            charactersLocalDatasource.saveComics(remoteComics)
+         }
       }
-
-      return charactersLocalDatasource.getComicsByCharacterId(characterId)
-   }
 
    suspend fun favoriteToggle(character: Character) {
       charactersLocalDatasource.saveCharacter(

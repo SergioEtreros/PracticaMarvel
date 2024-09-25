@@ -26,8 +26,8 @@ internal class CharactersRoomDataSource @Inject constructor(
   override suspend fun saveAllCharacters(characters: List<DomainCharacter>) =
     characterDao.insertCharacters(characters.map { it.toRoomModel() })
 
-   override suspend fun getComicsByCharacterId(id: Int) =
-      comicsDao.getComicsByCharacterId(id).map { it.imgUrl }
+  override fun getComicsByCharacterId(id: Int) =
+    comicsDao.getComicsByCharacterId(id).map { comics -> comics.map { it.imgUrl } }
 
   override suspend fun saveComics(comics: List<Comic>) =
     comicsDao.insertComics(comics.map { it.toRoomModel() })

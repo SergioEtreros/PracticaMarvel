@@ -35,6 +35,7 @@ class MainInstrumentedTest {
    @Before
    fun setup() {
       mockWebServerRule.server.enqueue(MockResponse().fromJson("marvel_characters.json"))
+      mockWebServerRule.server.enqueue(MockResponse().fromJson("marvel_character_comics.json"))
       hiltRule.inject()
    }
 
@@ -45,6 +46,8 @@ class MainInstrumentedTest {
       //TODO no pasa si la carga de los comics está en un combine del flow
       // se queda cargando constantemente, he probado añadiendo una nueva enqueue para mokear
       // la seguna llamada de retrofit con otro json para los comics y tampoco
+      // el mensaje que me da es este:
+      // Condition (at least one node matches (TestTag = 'FavoriteButton')) still not satisfied after 1000 ms
 
       waitUntilAtLeastOneExists(hasText("Anita Blake"))
       onNodeWithText("Anita Blake").performClick()

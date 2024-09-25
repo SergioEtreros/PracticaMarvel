@@ -9,7 +9,7 @@ interface CharactersLocalDataSource {
    fun getCharacter(id: Int): Flow<Character?>
    suspend fun saveCharacter(character: Character)
    suspend fun saveAllCharacters(characters: List<Character>)
-   suspend fun getComicsByCharacterId(id: Int): List<String>
+   fun getComicsByCharacterId(id: Int): Flow<List<String>>
    suspend fun saveComics(comics: List<Comic>)
    suspend fun deleteAll()
 }

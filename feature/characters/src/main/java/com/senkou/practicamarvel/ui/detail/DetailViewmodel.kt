@@ -18,25 +18,24 @@ import javax.inject.Named
 
 @HiltViewModel
 class DetailViewmodel @Inject constructor(
-   @Named("characterId") private val characterId: Int,
+   @Named("characterId") characterId: Int,
    getCharacterDetailsUseCase: GetCharacterDetailsUseCase,
-   private val getCharacterComicsUseCase: GetCharacterComicsUseCase,
+   getCharacterComicsUseCase: GetCharacterComicsUseCase,
    private val favoriteToggleUseCase: FavoriteToggleUseCase
 ) : ViewModel() {
 
    private var _state = MutableStateFlow(UiState())
-
    val state = _state.combine(getCharacterDetailsUseCase(characterId)) { state, character ->
       state.copy(character = character)
+   }.combine(getCharacterComicsUseCase(characterId)) { state, comics ->
+      state.copy(comics = comics)
    }.stateAsResultIn(viewModelScope)
 
-   fun loadComics() {
-      state.value.ifSuccess {
-         viewModelScope.launch {
-            _state.update { it.copy(comics = getCharacterComicsUseCase(characterId)) }
-         }
-      }
-   }
+   data class UiState(
+      val character: Character? = null,
+      val comics: List<String> = emptyList(),
+      val message: String? = null
+   )
 
    fun onFavoriteClick() {
       state.value.ifSuccess {
@@ -56,10 +55,4 @@ class DetailViewmodel @Inject constructor(
    fun onMessageShown() {
       _state.update { it.copy(message = null) }
    }
-
-   data class UiState(
-      val character: Character? = null,
-      val comics: List<String> = emptyList(),
-      val message: String? = null
-   )
 }

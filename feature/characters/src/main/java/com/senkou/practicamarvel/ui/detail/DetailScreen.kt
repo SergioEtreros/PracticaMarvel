@@ -41,8 +41,6 @@ fun DetailScreen(
 
    val state by vm.state.collectAsState()
 
-   vm.loadComics()
-
    DetailScreen(
       state = state,
       onBack = onBack,
