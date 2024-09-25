@@ -62,15 +62,20 @@ class DetailViewmodelTest {
    @Test
    fun `UI is updated with the character on start`() = runTest(coroutinesTestRule.testDispatcher) {
 
-      val state = DetailViewmodel.UiState(character, comics)
+      val initialState = DetailViewmodel.UiState(character, emptyList())
+      val finalState = DetailViewmodel.UiState(character, comics)
 
       //TODO no pasa si no dejo la lista de comics vacía
 
-      vm.loadComics()
+
       advanceUntilIdle()
       vm.state.test {
          assertEquals(Result.Loading, awaitItem())
-         assertEquals(Result.Success(state), awaitItem())
+         assertEquals(Result.Success(initialState), awaitItem())
+
+         vm.loadComics()
+
+         assertEquals(Result.Success(finalState), awaitItem())
       }
    }
 

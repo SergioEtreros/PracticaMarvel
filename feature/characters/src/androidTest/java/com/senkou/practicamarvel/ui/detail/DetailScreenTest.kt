@@ -110,6 +110,8 @@ class DetailScreenTest {
       //TODO no consigo que pase por el callback del onMessageShown, diría que es por ser un
       // launcEffect, pero no estoy seguro
 
+      val state = state.copy(message = "mensaje")
+
       setContent {
          DetailScreen(
             state = Result.Success(state),
@@ -120,6 +122,8 @@ class DetailScreenTest {
             },
          )
       }
+
+      mainClock.advanceTimeBy(5000)
 
       assert(message.isNotEmpty())
    }

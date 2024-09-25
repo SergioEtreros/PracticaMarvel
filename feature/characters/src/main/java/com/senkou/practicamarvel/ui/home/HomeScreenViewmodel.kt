@@ -12,8 +12,6 @@ class HomeScreenViewmodel @Inject constructor(
    getCharacterListUseCase: GetCharacterListUseCase,
 ) : ViewModel() {
 
-   val state by lazy {
-      getCharacterListUseCase().stateAsResultIn(viewModelScope)
-   }
+   val state = getCharacterListUseCase().stateAsResultIn(viewModelScope)
 }
 

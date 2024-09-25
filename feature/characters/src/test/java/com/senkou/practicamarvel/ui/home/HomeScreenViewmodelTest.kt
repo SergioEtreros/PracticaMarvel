@@ -8,10 +8,10 @@ import com.senkou.practicamarvel.ui.common.Result
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -34,15 +34,10 @@ class HomeScreenViewmodelTest {
    private lateinit var vm: HomeScreenViewmodel
    private val characters = sampleCharacters(1, 5, 8)
 
-   @Before
-   fun setUp() {
-      //TODO he conseguido que lo coja así poniendo el flow del vm como lazy
-      vm = HomeScreenViewmodel(getCharacterListUseCase)
-   }
-
    @Test
    fun `Characters are requested at start`() = runTest {
       whenever(getCharacterListUseCase()).thenReturn(flowOf(characters))
+      vm = HomeScreenViewmodel(getCharacterListUseCase)
 
       vm.state.first()
       runCurrent()
@@ -53,6 +48,7 @@ class HomeScreenViewmodelTest {
    @Test
    fun `Characters are requested`() = runTest {
       whenever(getCharacterListUseCase()).thenReturn(flowOf(characters))
+      vm = HomeScreenViewmodel(getCharacterListUseCase)
 
       vm.state.test {
          assertEquals(Result.Loading, awaitItem())
@@ -63,17 +59,11 @@ class HomeScreenViewmodelTest {
    @Test
    fun `Error is propagated when request fails`() = runTest {
       val error = RuntimeException("Something went wrong")
-      whenever(getCharacterListUseCase()).thenThrow(error)
-
-      //TODO no llega a entrar en el vm.state.test, da error antes
-
-//      advanceUntilIdle()
-//      runCurrent()
+      whenever(getCharacterListUseCase.invoke()).thenReturn(flow { throw error })
+      vm = HomeScreenViewmodel(getCharacterListUseCase)
 
       vm.state.test {
          assertEquals(Result.Loading, awaitItem())
-//         awaitItem()
-//         ensureAllEventsConsumed()
          val exceptionMessage = (awaitItem() as Result.Error).throwable.message
          assertEquals("Something went wrong", exceptionMessage)
       }
